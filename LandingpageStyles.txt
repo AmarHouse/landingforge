@@ -1,0 +1,837 @@
+LANDING PAGE DESIGN SYSTEMS — ESPECIFICAÇÕES AVANÇADAS PARA IA
+
+OBJETIVO:
+Criar landing pages visualmente sofisticadas, modernas, coerentes e profissionais. Cada estilo deve influenciar TODAS as decisões visuais: layout, grid, tipografia, espaçamento, imagens, animações, componentes, microinterações, ícones, CTA, formulários e hierarquia de conteúdo.
+
+====================================================================
+PADRÕES GLOBAIS
+====================================================================
+
+Desktop Container:
+- Max Width: 1200–1440px
+- Content Width Ideal: 1140–1280px
+- Side Padding: 80–120px
+
+Tablet:
+- Padding: 48–64px
+
+Mobile:
+- Padding: 20–24px
+
+Sistema de Espaçamento:
+- 4px base unit
+- Escala:
+4
+8
+12
+16
+24
+32
+48
+64
+96
+128
+160
+
+Hero Section:
+- Altura mínima: 85vh
+- Ideal: 100vh
+
+Bordas:
+- Pequenas: 8px
+- Médias: 16px
+- Grandes: 24px
+- Premium: 32px
+
+Tipografia Escala:
+
+Hero XL:
+72–120px
+
+Hero:
+56–72px
+
+H1:
+48–64px
+
+H2:
+36–48px
+
+H3:
+24–32px
+
+Body:
+16–20px
+
+Small:
+14px
+
+Line Height:
+Headings: 0.95–1.15
+Body: 1.5–1.8
+
+====================================================================
+NEOBRUTALIST
+====================================================================
+
+Princípios:
+- Visual agressivo
+- Contraste extremo
+- Impacto imediato
+- Estrutura rígida
+
+Grid:
+- 12 colunas
+- Gaps 24–40px
+
+Tipografia:
+- Inter Black
+- Space Grotesk Bold
+- Archivo Black
+- IBM Plex Sans Bold
+
+Headlines:
+- 80–120px
+- Caixa alta opcional
+
+Cores:
+#000000
+#FFFFFF
+#FF3B30
+#FFD60A
+#0057FF
+#00D26A
+
+Bordas:
+4–8px sólidas
+
+Sombras:
+8px 8px 0px #000
+
+Botões:
+- Grandes
+- Altura 60–72px
+
+Imagens:
+- Recortes fortes
+- Sem refinamento excessivo
+
+Microinterações:
+- Hover instantâneo
+- Escala 102%
+
+Conversão:
+Alta urgência e personalidade.
+
+====================================================================
+SWISS / INTERNATIONAL
+====================================================================
+
+Princípios:
+- Ordem absoluta
+- Clareza máxima
+- Hierarquia racional
+
+Grid:
+12 colunas rígidas
+
+Tipografia:
+Helvetica Neue
+Inter
+Neue Haas Grotesk
+Univers
+
+Corpo:
+18px
+
+Headlines:
+48–72px
+
+Espaçamento:
+Muito generoso
+
+Cores:
+#FFFFFF
+#111111
+#E5E5E5
+
+Accent:
+1 única cor
+
+Imagens:
+Fotografia editorial limpa
+
+Elementos:
+Linhas de 1px
+
+Proporções:
+60% conteúdo
+40% respiro visual
+
+Sensação:
+Museu de design suíço.
+
+====================================================================
+EDITORIAL
+====================================================================
+
+Tipografia:
+
+Títulos:
+Canela
+Cormorant
+Playfair Display
+
+Texto:
+Inter
+Source Sans
+
+Grid:
+Assimétrico
+
+Espaçamento:
+Muito amplo
+
+Colunas:
+2 a 5
+
+Imagens:
+Grandes
+Alta qualidade
+
+Paleta:
+Preto suave
+Marfim
+Cinza quente
+
+Exemplo:
+#FAF7F2
+#1E1E1E
+#B59B7A
+
+Sensação:
+Vogue + Financial Times + Monocle.
+
+====================================================================
+GLASSMORPHISM
+====================================================================
+
+Blur:
+20–40px
+
+Opacidade:
+8–20%
+
+Bordas:
+1px rgba(255,255,255,.2)
+
+Sombras:
+Muito suaves
+
+Paleta:
+Gradientes luminosos
+
+Exemplo:
+#6D5DFC
+#46C2FF
+#B388FF
+
+Cards:
+Camadas sobrepostas
+
+Animações:
+Floating
+Parallax leve
+
+Sensação:
+iOS premium futurista.
+
+====================================================================
+RETRO FUTURISTIC
+====================================================================
+
+Tipografia:
+Eurostile
+Space Grotesk
+Orbitron
+
+Paleta:
+#FF00FF
+#00FFFF
+#4D4DFF
+#0A0A0A
+
+Elementos:
+Grid neon
+Glow controlado
+
+Hero:
+Visual cinematográfico
+
+Sensação:
+Futuro imaginado em 1986.
+
+====================================================================
+BAUHAUS
+====================================================================
+
+Formas:
+Círculo
+Quadrado
+Triângulo
+
+Paleta:
+#FF0000
+#FFD500
+#0055FF
+#000000
+#FFFFFF
+
+Tipografia:
+Futura
+Montserrat
+
+Composição:
+Geométrica
+
+Regra:
+Forma segue função.
+
+====================================================================
+ART DECO
+====================================================================
+
+Paleta:
+#D4AF37
+#111111
+#F6F1E7
+
+Tipografia:
+Cinzel
+Cormorant
+
+Elementos:
+Linhas douradas
+Arcos
+Geometria elegante
+
+Espaçamento:
+Luxuoso
+
+Sensação:
+Hotel cinco estrelas dos anos 20.
+
+====================================================================
+MINIMAL
+====================================================================
+
+Princípios:
+Remover tudo que não gera valor.
+
+Paleta:
+2–3 cores no máximo
+
+Espaçamento:
+Gigantesco
+
+Hero:
+Mensagem única
+
+Elementos:
+Mínimos
+
+Sensação:
+Apple moderna.
+
+====================================================================
+FLAT DESIGN
+====================================================================
+
+Sombras:
+Nenhuma
+
+Paleta:
+Sólida
+
+Ícones:
+Vetoriais simples
+
+Bordas:
+1–2px
+
+Sensação:
+Clareza digital.
+
+====================================================================
+MATERIAL DESIGN
+====================================================================
+
+Elevação:
+4 níveis principais
+
+Cards:
+16px radius
+
+Tipografia:
+Roboto
+Inter
+
+Animações:
+300ms
+
+Sensação:
+Produto maduro.
+
+====================================================================
+NEUMORPHIC
+====================================================================
+
+Sombras:
+Exterior clara
+Exterior escura
+
+Radius:
+20–40px
+
+Paleta:
+Monocromática
+
+Evitar:
+Contraste insuficiente
+
+Sensação:
+Objeto físico suave.
+
+====================================================================
+MONOCHROMATIC
+====================================================================
+
+Estrutura:
+Uma única cor
+
+Criar:
+10–15 tonalidades
+
+Contraste:
+Luminosidade
+
+Sensação:
+Elegância disciplinada.
+
+====================================================================
+SCANDINAVIAN
+====================================================================
+
+Paleta:
+#F7F4EF
+#EAE3D7
+#D8CFC1
+#444444
+
+Tipografia:
+Inter
+Avenir
+
+Elementos:
+Madeira
+Linho
+Luz natural
+
+Espaçamento:
+Muito amplo
+
+Sensação:
+Casa premium nórdica.
+
+====================================================================
+JAPANDI
+====================================================================
+
+Paleta:
+#EDE6D6
+#C8B9A6
+#6D6258
+#2D2D2D
+
+Elementos:
+Pedra
+Cerâmica
+Madeira clara
+
+Layout:
+Zen
+
+Sensação:
+Calma sofisticada.
+
+====================================================================
+DARK MODE FIRST
+====================================================================
+
+Background:
+#050505
+#0A0A0A
+#111111
+
+Texto:
+#F5F5F5
+
+Accent:
+Roxo
+Azul
+Ciano
+
+Contraste:
+WCAG AAA
+
+Sensação:
+Tecnologia premium.
+
+====================================================================
+MODERNIST
+====================================================================
+
+Princípios:
+Função acima da decoração.
+
+Grid:
+Rigoroso
+
+Tipografia:
+Helvetica
+Inter
+
+Sensação:
+Atemporal.
+
+====================================================================
+ORGANIC / FLUID
+====================================================================
+
+Elementos:
+Blobs
+Máscaras fluidas
+
+Radius:
+32–64px
+
+Animações:
+Morphing suave
+
+Paleta:
+Natureza refinada
+
+Sensação:
+Humano + tecnologia.
+
+====================================================================
+CORPORATE PROFESSIONAL
+====================================================================
+
+Tipografia:
+Inter
+IBM Plex Sans
+
+Paleta:
+Azul institucional
+
+#0B5FFF
+#F5F7FA
+#1A1A1A
+
+Elementos:
+Logos
+Depoimentos
+KPIs
+
+Sensação:
+Empresa consolidada.
+
+====================================================================
+TECH FORWARD
+====================================================================
+
+Tipografia:
+Space Grotesk
+Satoshi
+Inter
+
+Paleta:
+Azul elétrico
+Roxo
+Ciano
+
+Componentes:
+Dashboards
+IA
+Analytics
+
+Sensação:
+Próxima geração.
+
+====================================================================
+LUXURY MINIMAL
+====================================================================
+
+Paleta:
+#FFFFFF
+#111111
+#D4AF37
+
+Tipografia:
+Canela
+Neue Haas
+
+Espaçamento:
+Muito amplo
+
+Imagens:
+Editorial premium
+
+Sensação:
+Luxo silencioso.
+
+====================================================================
+NEO GEO
+====================================================================
+
+Elementos:
+Geometria repetitiva
+Padrões matemáticos
+
+Grid:
+Modular
+
+Sensação:
+Arte algorítmica.
+
+====================================================================
+KINETIC
+====================================================================
+
+Movimento:
+Elemento principal
+
+Scroll:
+Narrativo
+
+Animações:
+150–600ms
+
+Sensação:
+Energia controlada.
+
+====================================================================
+GRADIENT MODERN
+====================================================================
+
+Gradientes:
+3–5 cores
+
+Exemplo:
+#7F5AF0
+#2CB67D
+#00D4FF
+
+Uso:
+Fundos
+Orbes
+Luzes
+
+Sensação:
+SaaS premium moderno.
+
+====================================================================
+TYPOGRAPHY FIRST
+====================================================================
+
+Headline:
+80–160px
+
+Peso:
+Black
+
+Layout:
+Construído em torno do texto
+
+Imagens:
+Secundárias
+
+Sensação:
+Design através da palavra.
+
+====================================================================
+METROPOLITAN
+====================================================================
+
+Referências:
+Nova York
+Londres
+Tóquio
+Milão
+
+Paleta:
+Concreto
+Grafite
+Aço
+Preto
+
+Fotografia:
+Arquitetura
+Moda
+Cidade
+
+Sensação:
+Capital global sofisticada.
+
+####################################################################
+COMBINAÇÕES PREMIUM (RECOMENDADAS)
+####################################################################
+
+1. SWISS + LUXURY MINIMAL
+Uso:
+Consultorias premium
+Finanças
+Private Equity
+
+Proporção:
+70% Swiss
+30% Luxury
+
+Resultado:
+Elegância institucional.
+
+--------------------------------------------------
+
+2. EDITORIAL + TYPOGRAPHY FIRST
+
+Uso:
+Personal brands
+Autores
+Agências criativas
+
+Proporção:
+50/50
+
+Resultado:
+Impacto intelectual.
+
+--------------------------------------------------
+
+3. TECH FORWARD + GLASSMORPHISM
+
+Uso:
+IA
+SaaS
+Startups
+
+Proporção:
+60/40
+
+Resultado:
+Futurismo premium.
+
+--------------------------------------------------
+
+4. SCANDINAVIAN + JAPANDI
+
+Uso:
+Arquitetura
+Interiores
+Wellness
+
+Proporção:
+50/50
+
+Resultado:
+Calma sofisticada.
+
+--------------------------------------------------
+
+5. NEOBRUTALIST + KINETIC
+
+Uso:
+Startups disruptivas
+Produtos virais
+
+Proporção:
+70/30
+
+Resultado:
+Energia máxima.
+
+--------------------------------------------------
+
+6. DARK MODE FIRST + GRADIENT MODERN
+
+Uso:
+IA
+Crypto
+Tecnologia
+
+Proporção:
+60/40
+
+Resultado:
+Visual extremamente atual.
+
+--------------------------------------------------
+
+7. CORPORATE PROFESSIONAL + MODERNIST
+
+Uso:
+B2B Enterprise
+Fintech
+Healthtech
+
+Proporção:
+70/30
+
+Resultado:
+Confiança contemporânea.
+
+--------------------------------------------------
+
+8. SWISS + TECH FORWARD
+
+Uso:
+SaaS enterprise
+
+Resultado:
+Notion + Stripe + Linear.
+
+--------------------------------------------------
+
+9. LUXURY MINIMAL + EDITORIAL
+
+Uso:
+Moda
+Joalheria
+Imóveis de luxo
+
+Resultado:
+Marca premium global.
+
+--------------------------------------------------
+
+10. TYPOGRAPHY FIRST + SWISS
+
+Uso:
+Landing pages focadas em conversão
+
+Resultado:
+Clareza extrema e autoridade.
+
+####################################################################
+REGRA FINAL
+####################################################################
+
+Ao gerar qualquer landing page:
+- Escolha no máximo 1 estilo principal.
+- Escolha no máximo 1 estilo secundário.
+- Mantenha 80% do estilo principal.
+- Use o secundário apenas para enriquecer.
+- Preserve consistência visual em TODOS os componentes.
+- Evite misturar mais de 2 estilos.
+- Priorize legibilidade, hierarquia visual e conversão acima da estética.
+- Toda decisão visual deve reforçar a personalidade da marca.

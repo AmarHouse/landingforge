@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pousada das Acerolas | Um Doce Refúgio na Natureza em Penedo RJ</title>
+    <meta name="description" content="Pousada das Acerolas em Penedo RJ: hospedagem familiar, descanso em meio à natureza, café da manhã premium com geleia de acerola caseira, piscina, área de lazer e estacionamento seguro. Reserve agora!">
+    <meta name="keywords" content="pousada Penedo RJ, hospedagem Penedo, pousada familiar Penedo, descanso natureza Penedo, café da manhã pousada Penedo, pousada com piscina Penedo, turismo Penedo RJ, pousada Itatiaia">
+    <meta name="theme-color" content="#2D8A4E">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://pousadadasacerolas.com.br/">
+    <!-- Preload hero background image -->
+    <link rel="preload" as="image" href="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1920" fetchpriority="high">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Pousada das Acerolas | Um Doce Refúgio na Natureza em Penedo RJ">
+    <meta property="og:description" content="Hospedagem familiar em Penedo RJ com café da manhã premium, área verde exuberante e muito descanso. Reserve sua estadia agora!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pousadadasacerolas.com.br/">
+    <meta property="og:image" content="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200">
+    <meta property="og:site_name" content="Pousada das Acerolas">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pousada das Acerolas | Um Doce Refúgio na Natureza em Penedo RJ">
+    <meta name="twitter:description" content="Hospedagem familiar em Penedo RJ com café da manhã premium, área verde exuberante e muito descanso. Reserve sua estadia agora!">
+    <meta name="twitter:image" content="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        yellow: '#F9D71C',
+                        green: '#2D8A4E',
+                        pink: '#E86A8C',
+                        cream: '#FFF8E7',
+                        brown: '#3E2723',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Lato', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --color-yellow: #F9D71C;
+            --color-green: #2D8A4E;
+            --color-pink: #E86A8C;
+            --color-cream: #FFF8E7;
+            --color-brown: #3E2723;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-body);
+            color: var(--color-brown);
+            background-color: var(--color-cream);
+            line-height: 1.6;
+        }
+        /* Animações de entrada ao rolar */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Scroll-driven animations (2025 modern CSS) */
+        @supports (animation-timeline: view()) {
+            .fade-in-section {
+                animation: fade-in linear both;
+                animation-timeline: view();
+                animation-range: entry 0% cover 30%;
+            }
+        }
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Efeito de hover nos cards */
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--color-green);
+        }
+        /* Efeito de hover nos botões */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        /* Accordion FAQ */
+        details[open] summary .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        summary {
+            list-style: none;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        /* Acessibilidade: movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        /* Otimização de performance */
+        .content-visibility-auto {
+            content-visibility: auto;
+        }
+    </style>
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Pousada das Acerolas | Um Doce Refúgio na Natureza em Penedo RJ",
+            "description": "Pousada das Acerolas em Penedo RJ: hospedagem familiar, descanso em meio à natureza, café da manhã premium com geleia de acerola caseira.",
+            "url": "https://pousadadasacerolas.com.br/",
+            "image": "https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200",
+            "publisher": {
+                "@type": "Organization",
+                "name": "Pousada das Acerolas",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://pousadadasacerolas.com.br/images/logo-pousada-das-acerolas.webp"
+                }
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "A Pousada das Acerolas aceita pets?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Não, a Pousada das Acerolas não aceita animais de estimação. Essa política foi adotada para manter o conforto e a segurança de todos os hóspedes, especialmente aqueles com alergias ou sensibilidades a animais."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Qual o horário de check-in e check-out na Pousada das Acerolas?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "O check-in é realizado a partir das 14:00 e o check-out até às 12:00. Nossa recepção funciona das 08:00 às 22:00, todos os dias, para garantir atendimento completo aos nossos hóspedes."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "O café da manhã está incluso na diária da Pousada das Acerolas?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sim! O café da manhã está incluso em todas as diárias. Oferecemos mais de 35 opções, incluindo frutas frescas, pães, bolos caseiros, pão de queijo, sucos naturais e nossa famosa geleia de acerola produzida na própria pousada."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "A Pousada das Acerolas tem estacionamento?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sim, a pousada oferece estacionamento fechado e seguro, sem custo adicional para os hóspedes. Você pode deixar seu veículo com total tranquilidade durante toda a estadia."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Quais são as formas de pagamento aceitas na Pousada das Acerolas?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Aceitamos cartão de crédito, PIX, transferência bancária e dinheiro. Para reservas, solicitamos um sinal de 30% do valor total, com o restante podendo ser pago no check-in."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Qual a política de cancelamento da Pousada das Acerolas?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Cancelamentos feitos com até 7 dias de antecedência têm devolução integral do valor pago. Cancelamentos após 7 dias não geram devolução do sinal de 30%, mas o valor pode ser convertido em crédito válido por até 3 meses (exceto para feriados e datas festivas). Em caso de no-show, não há devolução nem conversão em crédito."
+                    }
+                }
+            ]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Hotel",
+            "name": "Pousada das Acerolas",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua do Operário – Formigueiro",
+                "addressLocality": "Penedo",
+                "addressRegion": "RJ",
+                "addressCountry": "BR",
+                "postalCode": "27598-000"
+            },
+            "telephone": "+5524999796381",
+            "email": "contato@pousadadasacerolas.com.br",
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.7",
+                "reviewCount": "700",
+                "bestRating": "5"
+            },
+            "amenityFeature": [
+                {
+                    "@type": "LocationFeatureSpecification",
+                    "name": "Piscina ao ar livre"
+                },
+                {
+                    "@type": "LocationFeatureSpecification",
+                    "name": "Café da manhã incluso"
+                },
+                {
+                    "@type": "LocationFeatureSpecification",
+                    "name": "Estacionamento fechado"
+                },
+                {
+                    "@type": "LocationFeatureSpecification",
+                    "name": "Wi-Fi gratuito"
+                },
+                {
+                    "@type": "LocationFeatureSpecification",
+                    "name": "Área de lazer"
+                }
+            ]
+        }
+    </script>
+</head>
+<body>
+    <!-- Header / Navegação Fixa -->
+    <header id="header" class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md transition-all duration-300 py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center">
+                <img src="https://pousadadasacerolas.com.br/images/logo-pousada-das-acerolas.webp" alt="Logo Pousada das Acerolas" class="h-10 md:h-12" fetchpriority="high">
+            </a>
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#sobre" class="font-semibold text-brown hover:text-green-600 transition">Sobre</a>
+                <a href="#diferenciais" class="font-semibold text-brown hover:text-green-600 transition">Diferenciais</a>
+                <a href="#como-funciona" class="font-semibold text-brown hover:text-green-600 transition">Como Funciona</a>
+                <a href="#precos" class="font-semibold text-brown hover:text-green-600 transition">Preços</a>
+                <a href="#faq" class="font-semibold text-brown hover:text-green-600 transition">FAQ</a>
+                <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas." target="_blank" rel="noopener" class="btn-primary bg-green-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-green-700" aria-label="Falar com a Pousada das Acerolas no WhatsApp">
+                    Reservar Agora
+                </a>
+            </nav>
+            <!-- Botão Hambúrguer Mobile -->
+            <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menu" aria-expanded="false">
+                <span class="w-6 h-0.5 bg-brown transition-all duration-300"></span>
+                <span class="w-6 h-0.5 bg-brown transition-all duration-300"></span>
+                <span class="w-6 h-0.5 bg-brown transition-all duration-300"></span>
+            </button>
+        </div>
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-white/95 backdrop-blur-md z-60 hidden flex-col items-center justify-center gap-8">
+            <button id="menu-close" class="absolute top-6 right-6 text-3xl text-brown" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#sobre" class="text-2xl font-bold text-brown hover:text-green-600 transition mobile-link">Sobre</a>
+            <a href="#diferenciais" class="text-2xl font-bold text-brown hover:text-green-600 transition mobile-link">Diferenciais</a>
+            <a href="#como-funciona" class="text-2xl font-bold text-brown hover:text-green-600 transition mobile-link">Como Funciona</a>
+            <a href="#precos" class="text-2xl font-bold text-brown hover:text-green-600 transition mobile-link">Preços</a>
+            <a href="#faq" class="text-2xl font-bold text-brown hover:text-green-600 transition mobile-link">FAQ</a>
+            <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas." target="_blank" rel="noopener" class="btn-primary bg-green-600 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 mt-4">
+                Reservar Agora
+            </a>
+        </div>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative h-screen min-h-[600px]">
+            <!-- Imagem de fundo -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1920');"></div>
+            <!-- Overlay escuro -->
+            <div class="absolute inset-0 bg-black/50"></div>
+            <!-- Conteúdo do Hero -->
+            <div class="relative z-10 flex flex-col justify-center items-center text-center text-white px-4 h-full">
+                <h1 class="text-[clamp(2.25rem,4.5vw,3.5rem)] md:text-[clamp(2.75rem,5.5vw,4.5rem)] lg:text-[clamp(3.25rem,6.5vw,5.5rem)] font-bold font-heading mb-6 max-w-5xl leading-tight">
+                    Pousada das Acerolas: Um Doce Refúgio na Natureza em Penedo
+                </h1>
+                <p class="text-lg md:text-2xl max-w-3xl mb-10 text-white/90">
+                    Descanso, tranquilidade e hospedagem familiar no coração da colônia finlandesa do Brasil. Cercada por aceroleiras, área verde exuberante e o clima serrano que você precisa para recarregar as energias.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas." target="_blank" rel="noopener" class="btn-primary bg-green-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-green-700 shadow-lg" aria-label="Falar com a Pousada das Acerolas no WhatsApp para orçamento">
+                        <i class="fab fa-whatsapp mr-2"></i> Fazer Orçamento
+                    </a>
+                    <a href="#sobre" class="btn-primary bg-pink-500 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-pink-600 shadow-lg">
+                        Conheça a Pousada
+                    </a>
+                </div>
+                <!-- Badge de confiança -->
+                <div class="flex items-center gap-2 text-yellow-300 text-lg">
+                    <i class="fas fa-star"></i>
+                    <span>Nota 4,7 no Google • +700 avaliações positivas</span>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Sobre / Nossa História -->
+        <section id="sobre" class="py-20 bg-cream content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">Nossa História</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-12">Conheça a origem da Pousada das Acerolas e o que nos torna um refúgio único em Penedo RJ.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <img src="https://images.pexels.com/photos/3184416/pexels-photo-3184416.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fachada da Pousada das Acerolas com jardins e árvores frutíferas em Penedo RJ" class="rounded-xl shadow-lg w-full aspect-[4/3] object-cover" loading="lazy">
+                    <div>
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-4">Um doce de pousada, como o próprio nome diz</h3>
+                        <p class="mb-4 text-brown/90">
+                            A Pousada das Acerolas recebeu esse nome por causa dos diversos pés de acerola distribuídos por toda a propriedade, que se tornaram um dos símbolos do empreendimento. A fruta está presente inclusive em produtos servidos aos hóspedes, como a nossa famosa geleia de acerola produzida de forma caseira, com frutas colhidas diretamente dos pés da pousada.
+                        </p>
+                        <p class="mb-4 text-brown/90">
+                            Nossa proposta principal é oferecer um espaço de descanso, contato com a natureza, ambiente silencioso, clima serrano e hospedagem acolhedora para toda a família. Estamos localizados em Penedo, a principal colônia finlandesa do Brasil, próxima ao centro turístico, mas mantendo a privacidade e a tranquilidade que nossos hóspedes buscam.
+                        </p>
+                        <p class="mb-6 text-brown/90">
+                            Com mais de 20 anos de experiência em hospedagem, nós da Pousada das Acerolas temos como missão proporcionar momentos inesquecíveis para casais, famílias e todos os turistas que desejam fugir da rotina e se reconectar com a natureza.
+                        </p>
+                        <blockquote class="border-l-4 border-yellow-400 pl-4 italic text-brown/80">
+                            "Nossa maior alegria é ver os hóspedes chegando cansados da rotina e saindo renovados, com histórias para contar e o sabor da nossa geleia de acerola na memória." — Maria e José, proprietários
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Diferenciais / Serviços -->
+        <section id="diferenciais" class="py-20 bg-white content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">Nossos Diferenciais</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-12">Tudo o que você precisa para uma estadia inesquecível, com o conforto e a tranquilidade que só a Pousada das Acerolas oferece.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card 1: Café da Manhã (Mais Popular) -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md relative">
+                        <span class="absolute top-4 right-4 bg-yellow-400 text-brown px-3 py-1 rounded-full text-sm font-bold z-10">Mais Popular</span>
+                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Café da manhã da Pousada das Acerolas com frutas, pães e geleia de acerola caseira" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Café da Manhã Premium</h3>
+                            <p class="mb-3 text-brown/90">
+                                O café da manhã da Pousada das Acerolas é um dos nossos maiores diferenciais, preparado com carinho todos os dias para oferecer a melhor experiência aos nossos hóspedes. Com mais de 35 opções, você encontra desde pães frescos, bolos caseiros e pão de queijo até frutas da estação, sucos naturais e nossa famosa geleia de acerola produzida com frutas colhidas diretamente dos pés da propriedade.
+                            </p>
+                            <p class="text-brown/90">
+                                Todas as opções são preparadas com ingredientes selecionados, muitos deles produzidos na própria pousada, garantindo sabor e qualidade incomparáveis. É a maneira perfeita de começar o dia com energia para aproveitar todos os atrativos de Penedo e a natureza ao redor.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 2: Área Verde e Lazer -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Piscina da Pousada das Acerolas cercada por vegetação exuberante" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Área Verde e Lazer</h3>
+                            <p class="mb-3 text-brown/90">
+                                Um dos diferenciais mais evidentes da nossa pousada é o ambiente natural integrado à hospedagem. Nossa propriedade conta com piscina ao ar livre cercada por vegetação, sala de jogos com sinuca, totó e ping pong, além de jardins, gramados e espaços de contemplação para você aproveitar o silêncio e o contato com a natureza.
+                            </p>
+                            <p class="text-brown/90">
+                                Toda a área é mantida com cuidado para oferecer um ambiente seguro e acolhedor para adultos e crianças, com sombras de árvores frutíferas e vista para a serra de Itatiaia.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 3: Acomodações Aconchegantes -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.pexels.com/photos/3156482/pexels-photo-3156482.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Quarto Master da Pousada das Acerolas com varanda e rede" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Acomodações Aconchegantes</h3>
+                            <p class="mb-3 text-brown/90">
+                                Oferecemos 4 categorias de acomodações para atender a todos os tipos de hóspedes: desde quartos Standard econômicos e confortáveis até suítes Master King e Queen com varanda com rede, ar-condicionado e decoração rústica, além de quartos Família que acomodam até 4 pessoas ou mais.
+                            </p>
+                            <p class="text-brown/90">
+                                Todas as acomodações contam com banheiro privativo, Wi-Fi gratuito, TV e frigobar (em algumas categorias), além de limpeza diária e atendimento personalizado da nossa equipe.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 4: Localização Privilegiada -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.pexels.com/photos/1470405/pexels-photo-1470405.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Paisagem de Penedo RJ, colônia finlandesa onde está localizada a Pousada das Acerolas" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Localização Privilegiada</h3>
+                            <p class="mb-3 text-brown/90">
+                                A Pousada das Acerolas está situada em Penedo, a principal colônia finlandesa do Brasil, em uma localização estratégica que une privacidade e fácil acesso. Ficamos próximos ao centro turístico, mas longe do barulho, garantindo a tranquilidade que você precisa para descansar.
+                            </p>
+                            <p class="text-brown/90">
+                                De fácil acesso aos principais atrativos da região, como o Caminho do Itaimbezinho, a Casa de Pedra e os restaurantes típicos de Penedo, você pode explorar a região sem precisar se deslocar por longas distâncias.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 5: Estacionamento Seguro -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Estacionamento fechado e seguro da Pousada das Acerolas" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Estacionamento Seguro</h3>
+                            <p class="mb-3 text-brown/90">
+                                Nossa pousada oferece estacionamento fechado e seguro, sem custo adicional para todos os hóspedes. Você pode deixar seu veículo com total tranquilidade durante toda a estadia, sem se preocupar com roubos ou danos.
+                            </p>
+                            <p class="text-brown/90">
+                                O estacionamento é amplo, comportando carros de passeio, SUVs e motos, com vaga garantida para todos os hóspedes, mesmo em períodos de alta temporada.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 6: Wi-Fi em Toda a Propriedade -->
+                    <div class="feature-card bg-cream rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1" alt="Hóspede usando Wi-Fi em área externa da Pousada das Acerolas" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-green-600 mb-3">Wi-Fi em Toda a Propriedade</h3>
+                            <p class="mb-3 text-brown/90">
+                                Oferecemos Wi-Fi de alta velocidade em toda a propriedade, para você se manter conectado mesmo durante as férias. Seja para trabalhar remotamente, compartilhar fotos dos passeios ou se comunicar com a família, a internet está disponível em todos os quartos e áreas comuns.
+                            </p>
+                            <p class="text-brown/90">
+                                O serviço é gratuito para todos os hóspedes, sem limite de dados, para você aproveitar ao máximo sua estadia sem preocupações.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Como Funciona -->
+        <section id="como-funciona" class="py-20 bg-cream content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">Como Funciona sua Hospedagem</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-16">Reservar sua estadia na Pousada das Acerolas é simples e rápido, sem burocracia.</p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                    <!-- Linha conectora (visível apenas em desktop) -->
+                    <div class="hidden md:block absolute top-16 left-12 right-12 h-0.5 bg-green-200 -z-10"></div>
+                    <!-- Passo 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 relative z-10">1</div>
+                        <img src="https://images.pexels.com/photos/3255275/pexels-photo-3255275.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Opções de acomodações da Pousada das Acerolas" class="w-full h-48 object-cover rounded-xl shadow-md mb-4" loading="lazy">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-3">Escolha sua Acomodação</h3>
+                        <p class="text-brown/80">Nossa pousada oferece 4 categorias de acomodações para atender a todos os tipos de hóspedes: desde quartos Standard econômicos e confortáveis até suítes Master King e Queen com varanda com rede e ar-condicionado, além de quartos Família que acomodam até 4 pessoas ou mais.</p>
+                    </div>
+                    <!-- Passo 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 relative z-10">2</div>
+                        <img src="https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Reserva da Pousada das Acerolas feita pelo WhatsApp" class="w-full h-48 object-cover rounded-xl shadow-md mb-4" loading="lazy">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-3">Faça sua Reserva</h3>
+                        <p class="text-brown/80">Reserve diretamente conosco pelo WhatsApp, site ou telefone. Enviamos confirmação imediata e todas as informações necessárias para sua estadia, sem burocracia e com as melhores tarifas garantidas.</p>
+                    </div>
+                    <!-- Passo 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 relative z-10">3</div>
+                        <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Check-in na Pousada das Acerolas com drink de boas-vindas" class="w-full h-48 object-cover rounded-xl shadow-md mb-4" loading="lazy">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-3">Chegue e Aproveite</h3>
+                        <p class="text-brown/80">Faça check-in a partir das 14:00 na nossa recepção, aberta das 08:00 às 22:00. Receba um drink de boas-vindas, todas as informações sobre a pousada e os atrativos de Penedo, e comece a aproveitar sua estadia.</p>
+                    </div>
+                    <!-- Passo 4 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 relative z-10">4</div>
+                        <img src="https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1" alt="Família aproveitando a piscina da Pousada das Acerolas" class="w-full h-48 object-cover rounded-xl shadow-md mb-4" loading="lazy">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-3">Viva Momentos Inesquecíveis</h3>
+                        <p class="text-brown/80">Aproveite todas as nossas áreas de lazer, o café da manhã premium, a área verde e a tranquilidade do clima serrano. Volte para casa com histórias para contar e o sabor da nossa geleia de acerola na memória.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Depoimentos -->
+        <section id="depoimentos" class="py-20 bg-white content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">O que Nossos Hóspedes Dizem</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-12">Mais de 700 avaliações positivas no Google, com nota média 4,7. Confira alguns depoimentos de quem já viveu a experiência Pousada das Acerolas.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Depoimento 1 -->
+                    <div class="bg-cream p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="italic text-brown/90 mb-6">"Ficamos 5 dias e foi a melhor viagem em família que já fizemos. O café da manhã é incrível, a geleia de acerola é imperdível, e a área verde é perfeita para as crianças brincarem. Com certeza voltaremos!"</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1" alt="Foto de Maria Silva" class="w-12 h-12 rounded-full object-cover" loading="lazy">
+                            <div>
+                                <h4 class="font-bold text-brown">Maria Silva</h4>
+                                <p class="text-brown/70 text-sm">Hóspede • São Paulo, SP</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Depoimento 2 -->
+                    <div class="bg-cream p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="italic text-brown/90 mb-6">"Lugar perfeito para descansar, longe do barulho da cidade. A pousada é muito limpa, o atendimento é nota 10, e o café da manhã tem opções para todos os gostos. Recomendo muito para casais que buscam tranquilidade."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1" alt="Foto de João Pedro" class="w-12 h-12 rounded-full object-cover" loading="lazy">
+                            <div>
+                                <h4 class="font-bold text-brown">João Pedro</h4>
+                                <p class="text-brown/70 text-sm">Hóspede • Belo Horizonte, MG</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Depoimento 3 -->
+                    <div class="bg-cream p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                        <div class="text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="italic text-brown/90 mb-6">"Voltamos todo ano! A área verde é linda, a piscina é deliciosa, e o clima serrano é tudo que precisávamos para fugir do calor do verão. A equipe é muito atenciosa e a geleia de acerola é a melhor que já provei."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1" alt="Foto de Ana e Carlos" class="w-12 h-12 rounded-full object-cover" loading="lazy">
+                            <div>
+                                <h4 class="font-bold text-brown">Ana e Carlos</h4>
+                                <p class="text-brown/70 text-sm">Hóspedes • Curitiba, PR</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Estatísticas -->
+        <section id="estatisticas" class="py-20 bg-green-600 text-white content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="p-6">
+                        <p class="text-[clamp(2rem,4vw,3rem)] md:text-[clamp(2.5rem,5vw,3.5rem)] font-bold font-heading mb-2" data-target="700">0+</p>
+                        <p class="text-lg">Avaliações Positivas no Google</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[clamp(2rem,4vw,3rem)] md:text-[clamp(2.5rem,5vw,3.5rem)] font-bold font-heading mb-2" data-target="35">0+</p>
+                        <p class="text-lg">Opções no Café da Manhã</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[clamp(2rem,4vw,3rem)] md:text-[clamp(2.5rem,5vw,3.5rem)] font-bold font-heading mb-2" data-target="20">0</p>
+                        <p class="text-lg">Anos de Experiência em Hospedagem</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[clamp(2rem,4vw,3rem)] md:text-[clamp(2.5rem,5vw,3.5rem)] font-bold font-heading mb-2" data-target="4.7" data-decimal="true">0</p>
+                        <p class="text-lg">Nota Média dos Hóspedes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Preços -->
+        <section id="precos" class="py-20 bg-cream content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">Nossos Preços</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-12">Valores transparentes, sem taxas ocultas. Reserve diretamente conosco e garanta a melhor tarifa.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                    <!-- Plano Standard -->
+                    <div class="bg-white rounded-xl shadow-md p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-2">Standard</h3>
+                        <p class="text-4xl font-bold text-green-600 mb-1">R$ 250 <span class="text-lg font-normal text-brown/70">/noite</span></p>
+                        <p class="text-brown/70 mb-6">por quarto, café da manhã incluso</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Cama de solteiro ou casal</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Banheiro privativo</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Wi-Fi gratuito</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Café da manhã incluso</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Acesso a áreas comuns</span></li>
+                        </ul>
+                        <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas%20-%20Plano%20Standard." target="_blank" rel="noopener" class="btn-primary block w-full bg-green-600 text-white py-3 rounded-full font-semibold text-center hover:bg-green-700">
+                            Reservar Agora
+                        </a>
+                    </div>
+                    <!-- Plano Familiar (Mais Popular) -->
+                    <div class="bg-white rounded-xl shadow-md p-8 border-2 border-pink-500 relative scale-105 hover:shadow-xl transition-all duration-300">
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold">Mais Popular</span>
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-2">Familiar</h3>
+                        <p class="text-4xl font-bold text-green-600 mb-1">R$ 420 <span class="text-lg font-normal text-brown/70">/noite</span></p>
+                        <p class="text-brown/70 mb-6">por quarto, café da manhã incluso</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Quarto amplo para até 4 pessoas</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Banheiro privativo</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Wi-Fi gratuito</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Café da manhã incluso</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Acesso a piscina e sala de jogos</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Estacionamento incluso</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Varanda</span></li>
+                        </ul>
+                        <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas%20-%20Plano%20Familiar." target="_blank" rel="noopener" class="btn-primary block w-full bg-pink-500 text-white py-3 rounded-full font-semibold text-center hover:bg-pink-600">
+                            Reservar Agora
+                        </a>
+                    </div>
+                    <!-- Plano Master -->
+                    <div class="bg-white rounded-xl shadow-md p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                        <h3 class="text-[clamp(1.25rem,2.5vw,1.5rem)] font-bold text-brown mb-2">Master</h3>
+                        <p class="text-4xl font-bold text-green-600 mb-1">R$ 580 <span class="text-lg font-normal text-brown/70">/noite</span></p>
+                        <p class="text-brown/70 mb-6">por quarto, café da manhã incluso</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Cama King ou Queen Size</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Varanda com rede</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Ar-condicionado</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Frigobar e TV</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Banheiro privativo</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Wi-Fi gratuito</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Café da manhã incluso</span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-600"></i> <span>Acesso a todas as áreas</span></li>
+                        </ul>
+                        <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas%20-%20Plano%20Master." target="_blank" rel="noopener" class="btn-primary block w-full bg-green-600 text-white py-3 rounded-full font-semibold text-center hover:bg-green-700">
+                            Reservar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção FAQ -->
+        <section id="faq" class="py-20 bg-white content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown text-center mb-4">Perguntas Frequentes</h2>
+                <p class="text-center text-brown/70 max-w-2xl mx-auto mb-12">Tire suas dúvidas sobre a Pousada das Acerolas e planeje sua estadia sem preocupações.</p>
+                <div class="space-y-4">
+                    <!-- Pergunta 1 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            A Pousada das Acerolas aceita pets?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            Não, a Pousada das Acerolas não aceita animais de estimação. Essa política foi adotada para manter o conforto e a segurança de todos os hóspedes, especialmente aqueles com alergias ou sensibilidades a animais. Se você precisa viajar com pets, recomendamos consultar pousadas parceiras na região que aceitam animais.
+                        </div>
+                    </details>
+                    <!-- Pergunta 2 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            Qual o horário de check-in e check-out na Pousada das Acerolas?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            O check-in é realizado a partir das 14:00 e o check-out até às 12:00. Nossa recepção funciona das 08:00 às 22:00, todos os dias, para garantir atendimento completo aos nossos hóspedes. Se você precisar de horários diferenciados, entre em contato antecipadamente que verificaremos a disponibilidade.
+                        </div>
+                    </details>
+                    <!-- Pergunta 3 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            O café da manhã está incluso na diária?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            Sim! O café da manhã está incluso em todas as diárias. Oferecemos mais de 35 opções, incluindo frutas frescas, pães, bolos caseiros, pão de queijo, sucos naturais e nossa famosa geleia de acerola produzida na própria pousada. O horário do café da manhã é das 07:00 às 09:00 de segunda a sexta, e das 07:30 às 10:30 aos sábados, domingos e feriados.
+                        </div>
+                    </details>
+                    <!-- Pergunta 4 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            A Pousada das Acerolas tem estacionamento?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            Sim, a pousada oferece estacionamento fechado e seguro, sem custo adicional para todos os hóspedes. O espaço é amplo, comportando carros de passeio, SUVs e motos, com vaga garantida mesmo em períodos de alta temporada. Você pode deixar seu veículo com total tranquilidade durante toda a estadia.
+                        </div>
+                    </details>
+                    <!-- Pergunta 5 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            Quais são as formas de pagamento aceitas?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            Aceitamos cartão de crédito (todas as bandeiras), PIX, transferência bancária e dinheiro. Para confirmar a reserva, solicitamos um sinal de 30% do valor total, com o restante podendo ser pago no check-in. Parcelamos o valor em até 3x no cartão de crédito, sem juros.
+                        </div>
+                    </details>
+                    <!-- Pergunta 6 -->
+                    <details name="faq" class="bg-cream rounded-xl shadow-sm">
+                        <summary class="p-6 cursor-pointer flex justify-between items-center font-bold text-brown text-lg">
+                            Qual a política de cancelamento da Pousada das Acerolas?
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-brown/80">
+                            Cancelamentos feitos com até 7 dias de antecedência têm devolução integral do valor pago. Cancelamentos após 7 dias não geram devolução do sinal de 30%, mas o valor pode ser convertido em crédito válido por até 3 meses (exceto para feriados e datas festivas). Em caso de no-show, não há devolução nem conversão em crédito.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+        <!-- Seção Última Chance / CTA Final -->
+        <section class="py-16 bg-gradient-to-r from-yellow-400 to-green-500 text-brown text-center content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading mb-4">Não perca a chance de viver essa experiência única!</h2>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">Reserve agora sua estadia na Pousada das Acerolas e ganhe um passeio guiado gratuito pelos principais atrativos de Penedo, válido para reservas de 2 noites ou mais.</p>
+                <a href="https://wa.me/5524999796381?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20da%20Pousada%20das%20Acerolas." target="_blank" rel="noopener" class="btn-primary bg-pink-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-pink-600 shadow-lg inline-block" aria-label="Reservar estadia na Pousada das Acerolas pelo WhatsApp">
+                    <i class="fab fa-whatsapp mr-2"></i> Garantir Minha Reserva
+                </a>
+            </div>
+        </section>
+        <!-- Seção Newsletter -->
+        <section id="newsletter" class="py-20 bg-cream content-visibility-auto fade-in-section">
+            <div class="container mx-auto px-4 max-w-2xl text-center">
+                <h2 class="text-[clamp(1.75rem,3.5vw,2.25rem)] md:text-[clamp(2rem,4vw,2.75rem)] font-bold font-heading text-brown mb-4">Receba Ofertas Exclusivas</h2>
+                <p class="text-brown/70 mb-8">Inscreva-se para ganhar 10% de desconto na sua primeira reserva e receber dicas de passeios, promoções e novidades da Pousada das Acerolas.</p>
+                <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto mb-4">
+                    <input type="email" id="email" placeholder="Seu melhor e-mail" required class="flex-1 px-6 py-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+                    <button type="submit" class="btn-primary bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700 shadow-md">
+                        Inscrever-se
+                    </button>
+                </form>
+                <p id="form-message" class="text-brown/80 hidden"></p>
+                <p class="text-brown/70 mt-4">
+                    <i class="fas fa-users mr-2"></i> Junte-se a 1.200+ inscritos que já recebem nossas ofertas exclusivas!
+                </p>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-brown text-white py-16">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Coluna 1: Logo e Contato -->
+                <div>
+                    <img src="https://pousadadasacerolas.com.br/images/logo-pousada-das-acerolas.webp" alt="Logo Pousada das Acerolas" class="h-10 mb-4">
+                    <p class="text-white/80 mb-6">A Pousada das Acerolas é o refúgio perfeito para quem busca descanso, contato com a natureza e hospedagem acolhedora em Penedo RJ.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-yellow-400"></i>
+                            <a href="https://wa.me/5524999796381" target="_blank" rel="noopener" class="hover:text-yellow-400 transition">+55 (24) 99979-6381</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-yellow-400"></i>
+                            <a href="mailto:contato@pousadadasacerolas.com.br" class="hover:text-yellow-400 transition">contato@pousadadasacerolas.com.br</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Pousada+das+Acerolas+Penedo+RJ" target="_blank" rel="noopener" class="hover:text-yellow-400 transition">Rua do Operário – Formigueiro, Penedo – Itatiaia – RJ, CEP 27598-000</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Coluna 2: Links Rápidos -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-white/80 hover:text-yellow-400 transition">Home</a></li>
+                        <li><a href="#sobre" class="text-white/80 hover:text-yellow-400 transition">Sobre</a></li>
+                        <li><a href="#diferenciais" class="text-white/80 hover:text-yellow-400 transition">Diferenciais</a></li>
+                        <li><a href="#como-funciona" class="text-white/80 hover:text-yellow-400 transition">Como Funciona</a></li>
+                        <li><a href="#precos" class="text-white/80 hover:text-yellow-400 transition">Preços</a></li>
+                        <li><a href="#faq" class="text-white/80 hover:text-yellow-400 transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <!-- Coluna 3: Serviços -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Serviços</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#diferenciais" class="text-white/80 hover:text-yellow-400 transition">Café da Manhã Premium</a></li>
+                        <li><a href="#diferenciais" class="text-white/80 hover:text-yellow-400 transition">Área de Lazer</a></li>
+                        <li><a href="#diferenciais" class="text-white/80 hover:text-yellow-400 transition">Estacionamento Seguro</a></li>
+                        <li><a href="#diferenciais" class="text-white/80 hover:text-yellow-400 transition">Wi-Fi em Toda a Propriedade</a></li>
+                        <li><a href="#precos" class="text-white/80 hover:text-yellow-400 transition">Reservas</a></li>
+                    </ul>
+                </div>
+                <!-- Coluna 4: Horários -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Horários</h4>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between">
+                            <span class="text-white/80">Check-in:</span>
+                            <span>A partir das 14:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-white/80">Check-out:</span>
+                            <span>Até às 12:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-white/80">Receção:</span>
+                            <span>08:00 às 22:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-white/80">Café (seg-sex):</span>
+                            <span>07:00 às 09:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-white/80">Café (sáb/dom/feriados):</span>
+                            <span>07:30 às 10:30</span>
+                        </li>
+                    </ul>
+                    <!-- Ícones Sociais -->
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-brown transition" aria-label="Instagram da Pousada das Acerolas">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-brown transition" aria-label="Facebook da Pousada das Acerolas">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://wa.me/5524999796381" target="_blank" rel="noopener" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-brown transition" aria-label="WhatsApp da Pousada das Acerolas">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-brown transition" aria-label="TripAdvisor da Pousada das Acerolas">
+                            <i class="fab fa-tripadvisor"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Barra de Copyright -->
+            <div class="border-t border-white/10 pt-8 text-center text-white/70 text-sm">
+                <p>© 2025 Pousada das Acerolas. Todos os direitos reservados.</p>
+                <div class="mt-2">
+                    <a href="#" class="hover:text-yellow-400 transition">Política de Privacidade</a> • <a href="#" class="hover:text-yellow-400 transition">Termos de Uso</a> • <a href="#" class="hover:text-yellow-400 transition">Política de Cancelamento</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script>
+        // Menu Mobile Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuClose = document.getElementById('menu-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        menuToggle.addEventListener('click', toggleMenu);
+        menuClose.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        // Smooth Scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        // Efeito de navbar ao rolar
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-white/95', 'shadow-md');
+                header.classList.remove('bg-white/90');
+            } else {
+                header.classList.remove('bg-white/95', 'shadow-md');
+                header.classList.add('bg-white/90');
+            }
+        });
+        // Animação de entrada ao rolar (fade-in)
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    fadeInObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeInSections.forEach(section => fadeInObserver.observe(section));
+        // Animação de contador para estatísticas
+        const statNumbers = document.querySelectorAll('[data-target]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseFloat(entry.target.getAttribute('data-target'));
+                    const isDecimal = entry.target.getAttribute('data-decimal') === 'true';
+                    const duration = 2000;
+                    const startTime = performance.now();
+                    function updateCounter(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeOutQuad = 1 - Math.pow(1 - progress, 3);
+                        const current = target * easeOutQuad;
+                        if (isDecimal) {
+                            entry.target.textContent = current.toFixed(1);
+                        } else {
+                            entry.target.textContent = Math.floor(current);
+                        }
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            entry.target.textContent = isDecimal ? target.toFixed(1) : target + '+';
+                        }
+                    }
+                    requestAnimationFrame(updateCounter);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        statNumbers.forEach(stat => counterObserver.observe(stat));
+        // Validação do formulário de newsletter
+        const newsletterForm = document.getElementById('newsletter-form');
+        const formMessage = document.getElementById('form-message');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(email)) {
+                formMessage.textContent = 'Obrigado por se inscrever! Em breve você receberá nossas ofertas exclusivas.';
+                formMessage.classList.remove('hidden', 'text-red-500');
+                formMessage.classList.add('text-green-600');
+                newsletterForm.reset();
+            } else {
+                formMessage.textContent = 'Por favor, insira um endereço de e-mail válido.';
+                formMessage.classList.remove('hidden', 'text-green-600');
+                formMessage.classList.add('text-red-500');
+            }
+        });
+        // Animação do ícone do accordion FAQ
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', () => {
+                const icon = detail.querySelector('.fa-chevron-down');
+                if (detail.open) {
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
