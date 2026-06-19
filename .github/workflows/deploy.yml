@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare
 
 on:
   push:
@@ -20,12 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install latest Wrangler
+        run: npm install -g wrangler@latest
+
       - name: Build for Cloudflare
         run: npm run cf:build
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy .open-next/worker.js --name landingforge
+      - name: Deploy
+        run: wrangler deploy .open-next/worker.js --name landingforge --compatibility-date 2025-06-01 --compatibility-flags nodejs_compat
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
