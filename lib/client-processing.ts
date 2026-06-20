@@ -6,7 +6,7 @@
 import { chatCompletion, type ChatMessage } from "./openai-client";
 import { fixTruncatedHtml } from "./fix-html";
 import { injectModernCSSFallback } from "./style-modern-css";
-import { REVIEW_SYSTEM_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
+import { REVIEW_SYSTEM_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, BRIEFING_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
 
 /**
  * Apply SEARCH/REPLACE patches from AI response to HTML.
@@ -96,6 +96,41 @@ export async function followUpEdit(
  * Review and fix generated HTML — client-side.
  * Moved from app/api/review-html/route.ts POST handler.
  */
+export interface BriefingResult {
+  title: string;
+  description: string;
+  keywords: string;
+  industry: string;
+  colorScheme: { primary: string; secondary: string; accent: string; background: string; text: string };
+  typography: { headingFont: string; bodyFont: string; googleFontsUrl: string };
+  sections: Array<{ id: string; title: string; content: string; pexelsIds: number[] }>;
+  tone: string;
+  ctaText: string;
+  ctaColor: string;
+}
+
+/**
+ * Generate a structured briefing before HTML generation.
+ * This is the first pass of multi-pass generation.
+ */
+export async function generateBriefing(userPrompt: string): Promise<BriefingResult> {
+  const chunk = await chatCompletion({
+    messages: [
+      { role: "system", content: BRIEFING_SYSTEM_PROMPT },
+      { role: "user", content: userPrompt },
+    ],
+    maxTokens: 4096,
+  });
+
+  if (!chunk) {
+    throw new Error("No briefing returned from the model");
+  }
+
+  // Parse JSON response, strip markdown fences if present
+  const cleaned = chunk.replace(/^\s*```(?:json)?\s*\n?/i, "").replace(/\s*```\s*$/, "").trim();
+  return JSON.parse(cleaned) as BriefingResult;
+}
+
 export async function reviewHtml(html: string): Promise<string> {
   // Fix truncated HTML first
   const fixedHtml = fixTruncatedHtml(html);
