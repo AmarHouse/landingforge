@@ -57,7 +57,7 @@ export const INITIAL_SYSTEM_PROMPT = `You are an expert web developer creating a
 ⚠️ OUTPUT RULES:
 1. Start with <!DOCTYPE html> as the VERY FIRST characters. RAW HTML only — no markdown fences, no backticks, no explanation.
 2. All content in <head>: charset, viewport, title, Google Fonts link with display=swap, all <style> tags.
-3. Single HTML file. Custom CSS only (NO Tailwind CDN — use inline styles or a <style> block). Mobile-first responsive.
+3. Single HTML file. TailwindCSS primary via CDN, custom CSS if needed. Mobile-first responsive.
 
 🚀 PAGESPEED PERFORMANCE RULES (CRITICAL — follow ALL of these):
 1. FONT-DISPLAY: Google Fonts URL MUST include &display=swap to prevent FOIT (Flash of Invisible Text)
@@ -137,7 +137,7 @@ export const ENHANCED_SYSTEM_PROMPT = `You are a senior web architect creating a
 ⚠️ OUTPUT RULES:
 1. Start with <!DOCTYPE html> as the VERY FIRST characters. RAW HTML only — no markdown fences, no backticks, no explanation.
 2. All content in <head>: charset, viewport, title, Google Fonts link with display=swap, all <style> tags.
-3. Single HTML file. Custom CSS only (NO Tailwind CDN — use inline styles or a <style> block). Mobile-first responsive.
+3. Single HTML file. TailwindCSS primary via CDN, custom CSS if needed. Mobile-first responsive.
 
 🚀 PAGESPEED PERFORMANCE RULES (CRITICAL — follow ALL of these):
 1. FONT-DISPLAY: Google Fonts URL MUST include &display=swap to prevent FOIT (Flash of Invisible Text)
