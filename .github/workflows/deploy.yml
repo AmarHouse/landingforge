@@ -23,11 +23,11 @@ jobs:
       - name: Install latest Wrangler
         run: npm install -g wrangler@latest
 
-      - name: Build for Cloudflare
-        run: npm run cf:build
+      - name: Build static site
+        run: npm run build
 
-      - name: Deploy
-        run: wrangler deploy .open-next/worker.js --name landingforge --compatibility-date 2025-06-01 --compatibility-flags nodejs_compat
+      - name: Deploy to Cloudflare Pages
+        run: npx wrangler pages deploy out/ --project-name=landingforge
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

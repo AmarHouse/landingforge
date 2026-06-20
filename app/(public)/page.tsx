@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { AppEditor } from "@/components/editor";
 export default function Home() {
-  redirect("/projects/new");
+  return <AppEditor />;
 }

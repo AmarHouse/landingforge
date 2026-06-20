@@ -8,9 +8,9 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
-    "cf:build": "next build && opennextjs-cloudflare build",
-    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy": "opennextjs-cloudflare build && wrangler deploy"
+    "cf:build": "next build",
+    "cf:preview": "next build && npx wrangler pages dev out/",
+    "cf:deploy": "next build && npx wrangler pages deploy out/ --project-name=landingforge"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0-rc.0",

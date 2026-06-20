@@ -40,20 +40,21 @@ export function ReImagine({
       return;
     }
     setIsLoading(true);
-    const res = await fetch("/api/re-design", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: url.trim() }),
+    // Jina Reader supports CORS — call directly from browser
+    const res = await fetch(`https://r.jina.ai/${encodeURIComponent(url.trim())}`, {
+      method: "POST",
     });
-    const data = await res.json();
-    if (data?.ok) {
-      setOpen(false);
-      setUrl("");
-      onRedesign(data.markdown);
-      toast.success("LandingForge is redesigning your site! Let him cook... 🔥");
-    } else {
-      toast.error(data?.error || "Failed to redesign the site.");
+    const text = await res.text();
+    if (!res.ok) {
+      toast.error(text || "Failed to redesign the site.");
+      setIsLoading(false);
+      return;
     }
+    const markdown = text;
+    setOpen(false);
+    setUrl("");
+    onRedesign(markdown);
+    toast.success("LandingForge is redesigning your site! Let him cook... 🔥");
     setIsLoading(false);
   };
 

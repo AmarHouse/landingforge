@@ -23,7 +23,10 @@ import { PromptHistory } from "./prompt-history";
 import { SiteHistory } from "./site-history";
 import { savePromptToHistory, saveSiteToHistory } from "@/lib/prompt-history";
 import { Settings as AiSettings } from "./settings";
-import { hasAIConfig, getAIConfig } from "@/lib/ai-config";
+import { hasAIConfig } from "@/lib/ai-config";
+import { streamChatCompletion } from "@/lib/openai-client";
+import { followUpEdit, reviewHtml } from "@/lib/client-processing";
+import { getSystemPrompt } from "@/lib/prompts";
 
 export function AskAI({
   html,
@@ -63,7 +66,7 @@ export function AskAI({
   const [think, setThink] = useState<string | undefined>(undefined);
   const [openThink, setOpenThink] = useState(false);
   const [isThinking, setIsThinking] = useState(true);
-  const [controller, setController] = useState<AbortController | null>(null);
+  const controllerRef = useRef<AbortController | null>(null);
   const [isFollowUp, setIsFollowUp] = useState(false);
   const [selectedStyle, setSelectedStyle] = useLocalStorage("designStyle", "default");
   const [showHistory, setShowHistory] = useState(false);
@@ -110,229 +113,182 @@ export function AskAI({
     let contentResponse = "";
     let thinkResponse = "";
 
-    const abortController = new AbortController();
-    setController(abortController);
     try {
       onNewPrompt(prompt);
       if (isFollowUp && !redesignMarkdown && !isSameHtml) {
         const selectedElementHtml = selectedElement
           ? selectedElement.outerHTML
           : "";
-        const request = await fetch("/api/ask-ai", {
-          method: "PUT",
-          body: JSON.stringify({
-            prompt: enhancedPrompt,
-            previousPrompt,
-            html,
-            selectedElementHtml,
-            aiConfig: getAIConfig(),
-          }),
-          headers: { "Content-Type": "application/json" },
-          signal: abortController.signal,
+        const result = await followUpEdit(
+          enhancedPrompt,
+          html,
+          previousPrompt,
+          selectedElementHtml
+        );
+        setHtml(result.html);
+        toast.success("AI responded successfully");
+
+        savePromptToHistory({
+          prompt: enhancedPrompt,
+          style: selectedStyle as string,
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+          originalPrompt: previousPrompt,
         });
-        if (request && request.body) {
-          const res = await request.json();
-          if (!request.ok) {
-            toast.error(res.message || "Request failed");
-            setisAiWorking(false);
-            return;
-          }
-          setHtml(res.html);
-          toast.success("AI responded successfully");
 
-          savePromptToHistory({
-            prompt: enhancedPrompt,
-            style: selectedStyle as string,
-            mode: "classic",
-            provider: "api",
-            model: "local",
-            isFollowUp: true,
-            originalPrompt: previousPrompt,
-          });
+        saveSiteToHistory({
+          prompt,
+          html: result.html,
+          style: selectedStyle as string,
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+        });
 
-          saveSiteToHistory({
-            prompt,
-            html: res.html,
-            style: selectedStyle as string,
-            mode: "classic",
-            provider: "api",
-            model: "local",
-            isFollowUp: true,
-          });
-
-          setPreviousPrompt(prompt);
-          setPrompt("");
-          setisAiWorking(false);
-          onSuccess(res.html, prompt, res.updatedLines);
-          if (audio.current) audio.current.play();
-        }
+        setPreviousPrompt(prompt);
+        setPrompt("");
+        setisAiWorking(false);
+        onSuccess(result.html, prompt, result.updatedLines);
+        if (audio.current) audio.current.play();
       } else {
-        const request = await fetch("/api/ask-ai", {
-          method: "POST",
-          body: JSON.stringify({
-            prompt: enhancedPrompt,
-            html: isSameHtml ? "" : html,
-            redesignMarkdown,
-            promptMode,
-            sectionMode,
-            aiConfig: getAIConfig(),
-          }),
-          headers: { "Content-Type": "application/json" },
+        const userContent = redesignMarkdown
+          ? `Here is my current design as a markdown:\n\n${redesignMarkdown}\n\nNow, please create a new design based on this markdown.`
+          : (isSameHtml ? "" : html)
+            ? `Here is my current HTML code:\n\n\`\`\`html\n${isSameHtml ? "" : html}\n\`\`\`\n\nNow, please create a new design based on this HTML.`
+            : enhancedPrompt;
+
+        const abortController = new AbortController();
+        controllerRef.current = abortController;
+        const stream = streamChatCompletion({
+          messages: [
+            { role: "system", content: getSystemPrompt(promptMode as "classic" | "enhanced", sectionMode as boolean, enhancedPrompt) },
+            { role: "user", content: userContent },
+          ],
+          maxTokens: 32768,
           signal: abortController.signal,
         });
-        if (request && request.body) {
-          const reader = request.body.getReader();
-          const decoder = new TextDecoder("utf-8");
-          let contentThink: string | undefined = undefined;
-          const read = async () => {
-            const { done, value } = await reader.read();
-            if (done) {
-              const isJson =
-                contentResponse.trim().startsWith("{") &&
-                contentResponse.trim().endsWith("}");
-              const jsonResponse = isJson ? JSON.parse(contentResponse) : null;
-              if (jsonResponse && !jsonResponse.ok) {
-                toast.error(jsonResponse.message || "Request failed");
-                setisAiWorking(false);
-                return;
-              }
 
-              toast.success("AI responded successfully");
+        let contentThink = "";
 
-              savePromptToHistory({
-                prompt: redesignMarkdown
-                  ? `Redesign: ${redesignMarkdown}`
-                  : enhancedPrompt,
-                style: selectedStyle as string,
-                mode: promptMode as "classic" | "enhanced",
-                provider: "api",
-                model: "local",
-                isFollowUp: false,
-              });
+        for await (const chunk of stream) {
+          thinkResponse += chunk;
 
-              const finalDoc = contentResponse.match(
-                /<!DOCTYPE html>[\s\S]*<\/html>/
-              )?.[0];
+          const thinkMatch = thinkResponse.match(/<think>[\s\S]*/)?.[0];
+          if (thinkMatch && !thinkResponse?.includes("</think>")) {
+            if (contentThink.length < 3) {
+              setOpenThink(true);
+            }
+            setThink(thinkMatch.replace("<think>", "").trim());
+            contentThink += chunk;
+            continue;
+          }
 
-              saveSiteToHistory({
-                prompt: redesignMarkdown
-                  ? `Redesign: ${redesignMarkdown}`
-                  : prompt,
-                html: finalDoc ?? contentResponse,
-                style: selectedStyle as string,
-                mode: promptMode as "classic" | "enhanced",
-                provider: "api",
-                model: "local",
-                isFollowUp: false,
-              });
+          contentResponse += chunk;
 
-              setPreviousPrompt(prompt);
-              setPrompt("");
-              setHasAsked(true);
-              if (audio.current) audio.current.play();
-
-              // Second pass: AI review to fix issues (missing JS, broken HTML, SEO)
-              const rawHtml = finalDoc ?? contentResponse;
-              try {
-                toast.info("AI is reviewing the generated HTML...");
-                const reviewResponse = await fetch("/api/review-html", {
-                  method: "POST",
-                  body: JSON.stringify({
-                    html: rawHtml,
-                    aiConfig: getAIConfig(),
-                  }),
-                  headers: { "Content-Type": "application/json" },
-                });
-                if (reviewResponse.ok) {
-                  const reviewResult = await reviewResponse.json();
-                  if (reviewResult.ok && reviewResult.reviewed) {
-                    setHtml(reviewResult.html);
-                    toast.success("HTML reviewed and corrected!");
-                    onSuccess(reviewResult.html, prompt);
-                  } else {
-                    setHtml(rawHtml);
-                    onSuccess(rawHtml, prompt);
-                  }
-                } else {
-                  setHtml(rawHtml);
-                  onSuccess(rawHtml, prompt);
-                }
-              } catch {
-                // If review fails, still show the original HTML
-                setHtml(rawHtml);
-                onSuccess(rawHtml, prompt);
-              } finally {
-                setisAiWorking(false);
-              }
-
-              return;
+          const newHtml = contentResponse.match(
+            /<!DOCTYPE html>[\s\S]*/
+          )?.[0];
+          if (newHtml) {
+            setIsThinking(false);
+            let partialDoc = newHtml;
+            if (partialDoc.includes("<head>") && !partialDoc.includes("</head>")) {
+              partialDoc += "\n</head>";
+            }
+            if (partialDoc.includes("<body") && !partialDoc.includes("</body>")) {
+              partialDoc += "\n</body>";
+            }
+            if (!partialDoc.includes("</html>")) {
+              partialDoc += "\n</html>";
             }
 
-            const chunk = decoder.decode(value, { stream: true });
-            thinkResponse += chunk;
-
-            const thinkMatch = thinkResponse.match(/<think>[\s\S]*/)?.[0];
-            if (thinkMatch && !thinkResponse?.includes("</think>")) {
-              if ((contentThink?.length ?? 0) < 3) {
-                setOpenThink(true);
-              }
-              setThink(thinkMatch.replace("<think>", "").trim());
-              contentThink += chunk;
-              return read();
+            const now = performance.now();
+            if (now - lastRenderTimeRef.current > 300) {
+              setHtml(partialDoc);
+              lastRenderTimeRef.current = now;
             }
 
-            contentResponse += chunk;
-
-            const newHtml = contentResponse.match(
-              /<!DOCTYPE html>[\s\S]*/
-            )?.[0];
-            if (newHtml) {
-              setIsThinking(false);
-              let partialDoc = newHtml;
-              if (
-                partialDoc.includes("<head>") &&
-                !partialDoc.includes("</head>")
-              ) {
-                partialDoc += "\n</head>";
-              }
-              if (
-                partialDoc.includes("<body") &&
-                !partialDoc.includes("</body>")
-              ) {
-                partialDoc += "\n</body>";
-              }
-              if (!partialDoc.includes("</html>")) {
-                partialDoc += "\n</html>";
-              }
-
-              const now = performance.now();
-              if (now - lastRenderTimeRef.current > 300) {
-                setHtml(partialDoc);
-                lastRenderTimeRef.current = now;
-              }
-
-              if (partialDoc.length > 200) {
-                onScrollToBottom();
-              }
+            if (partialDoc.length > 200) {
+              onScrollToBottom();
             }
-            read();
-          };
+          }
+        }
 
-          read();
+        // Stream finished
+        const isJson =
+          contentResponse.trim().startsWith("{") &&
+          contentResponse.trim().endsWith("}");
+        const jsonResponse = isJson ? JSON.parse(contentResponse) : null;
+        if (jsonResponse && !jsonResponse.ok) {
+          toast.error(jsonResponse.message || "Request failed");
+          setisAiWorking(false);
+          return;
+        }
+
+        toast.success("AI responded successfully");
+
+        savePromptToHistory({
+          prompt: redesignMarkdown
+            ? `Redesign: ${redesignMarkdown}`
+            : enhancedPrompt,
+          style: selectedStyle as string,
+          mode: promptMode as "classic" | "enhanced",
+          provider: "api",
+          model: "local",
+          isFollowUp: false,
+        });
+
+        const finalDoc = contentResponse.match(
+          /<!DOCTYPE html>[\s\S]*<\/html>/
+        )?.[0];
+
+        saveSiteToHistory({
+          prompt: redesignMarkdown
+            ? `Redesign: ${redesignMarkdown}`
+            : prompt,
+          html: finalDoc ?? contentResponse,
+          style: selectedStyle as string,
+          mode: promptMode as "classic" | "enhanced",
+          provider: "api",
+          model: "local",
+          isFollowUp: false,
+        });
+
+        setPreviousPrompt(prompt);
+        setPrompt("");
+        setHasAsked(true);
+        if (audio.current) audio.current.play();
+
+        // Client-side review: fix HTML issues + inject modern CSS
+        const rawHtml = finalDoc ?? contentResponse;
+        try {
+          toast.info("Reviewing and fixing generated HTML...");
+          const reviewedHtml = await reviewHtml(rawHtml);
+          setHtml(reviewedHtml);
+          toast.success("HTML reviewed and corrected!");
+          onSuccess(reviewedHtml, prompt);
+        } catch {
+          setHtml(rawHtml);
+          onSuccess(rawHtml, prompt);
+        } finally {
+          setisAiWorking(false);
         }
       }
+      controllerRef.current = null;
     } catch (error: unknown) {
+      controllerRef.current = null;
       setisAiWorking(false);
       setIsThinking(false);
-      setController(null);
       toast.error(error instanceof Error ? error.message : 'An error occurred');
     }
   };
 
   const stopController = () => {
-    if (controller) {
-      controller.abort();
-      setController(null);
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+      controllerRef.current = null;
       setisAiWorking(false);
       setThink("");
       setOpenThink(false);

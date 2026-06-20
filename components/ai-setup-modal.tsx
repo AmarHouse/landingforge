@@ -50,21 +50,28 @@ export function AISetupModal({ open, onClose }: AISetupModalProps) {
     setTesting(true);
 
     try {
-      const res = await fetch("/api/test-connection", {
+      const res = await fetch("/api/proxy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           endpoint: endpoint.trim(),
-          model: model.trim(),
           apiKey: apiKey.trim(),
+          model: model.trim(),
+          messages: [{ role: "user", content: "Say 'ok'" }],
+          max_tokens: 5,
+          stream: false,
         }),
       });
 
-      const data = await res.json();
-      if (data.ok) {
+      if (res.ok) {
         toast.success("Connection successful!");
       } else {
-        toast.error(`Connection failed: ${data.error || "Unknown error"}`);
+        let msg = `HTTP ${res.status}`;
+        try {
+          const parsed = await res.json();
+          msg = parsed.error?.message || msg;
+        } catch { /* use status */ }
+        toast.error(`Connection failed: ${msg}`);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Unknown error";
