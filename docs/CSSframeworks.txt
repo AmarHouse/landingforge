@@ -1,0 +1,322 @@
+Se por "como o Tailwind" você quer dizer **ferramentas modernas para construir interfaces e landing pages rapidamente**, existem algumas categorias diferentes. O Tailwind domina a categoria Utility-First, mas há vários concorrentes e sucessores.
+
+# 1. Tailwind CSS (Líder atual)
+
+[Tailwind CSS](https://tailwindcss.com?utm_source=chatgpt.com)
+
+Filosofia:
+
+* Utility-first
+* Altamente customizável
+* Excelente para IA gerar código
+
+Ecossistema:
+
+* shadcn/ui
+* Magic UI
+* Aceternity UI
+* DaisyUI
+
+Status:
+⭐ Padrão de mercado para startups e SaaS.
+
+---
+
+# 2. UnoCSS
+
+[UnoCSS](https://unocss.dev?utm_source=chatgpt.com)
+
+É uma evolução conceitual do Tailwind.
+
+Vantagens:
+
+* Mais rápido
+* Menor bundle
+* Geração sob demanda extrema
+* Regras customizadas
+
+Muitos desenvolvedores consideram:
+
+```text
+UnoCSS = Tailwind 2.0
+```
+
+Ideal para:
+
+* IA gerando interfaces
+* Sistemas complexos
+
+---
+
+# 3. Panda CSS
+
+[Panda CSS](https://panda-css.com?utm_source=chatgpt.com)
+
+Criado pela equipe do Chakra UI.
+
+Mistura:
+
+* Design Tokens
+* CSS-in-JS moderno
+* Tailwind
+
+Muito forte para:
+
+* Design Systems
+* Enterprise
+
+---
+
+# 4. StyleX
+
+[StyleX](https://stylexjs.com?utm_source=chatgpt.com)
+
+Criado pela Meta.
+
+Objetivo:
+
+* Performance extrema
+* Escalabilidade gigantesca
+
+Usado em produtos da Meta.
+
+Muito promissor.
+
+---
+
+# 5. Open Props
+
+[Open Props](https://open-props.style?utm_source=chatgpt.com)
+
+Não é framework.
+
+É um sistema de:
+
+* Tokens
+* Variáveis CSS
+* Espaçamentos
+* Sombras
+* Tipografia
+
+Perfeito para IA gerar design systems.
+
+---
+
+# 6. Chakra UI
+
+[Chakra UI](https://chakra-ui.com?utm_source=chatgpt.com)
+
+Mais próximo de:
+
+```jsx
+<Button colorScheme="blue" />
+```
+
+do que:
+
+```html
+class="bg-blue-500"
+```
+
+Vantagem:
+
+* Muito produtivo
+
+Desvantagem:
+
+* Menos liberdade visual
+
+---
+
+# 7. Mantine
+
+[Mantine](https://mantine.dev?utm_source=chatgpt.com)
+
+Um dos frameworks mais completos atualmente.
+
+Possui:
+
+* Componentes
+* Hooks
+* Forms
+* Charts
+
+Muito usado em dashboards.
+
+---
+
+# 8. Radix UI
+
+[Radix UI](https://www.radix-ui.com?utm_source=chatgpt.com)
+
+Fornece apenas comportamento.
+
+Exemplo:
+
+* Dialog
+* Tooltip
+* Dropdown
+
+Sem estilo.
+
+É a base de:
+
+* shadcn/ui
+
+---
+
+# 9. shadcn/ui
+
+[shadcn/ui](https://ui.shadcn.com?utm_source=chatgpt.com)
+
+Hoje talvez seja o mais importante para landing pages modernas.
+
+Mistura:
+
+```text
+Radix UI
++
+Tailwind
++
+Design System
+```
+
+Resultado:
+
+* Componentes premium
+* Código próprio
+* Alta customização
+
+Muito usado por:
+
+* Startups IA
+* SaaS modernos
+
+---
+
+# 10. Base UI
+
+[Base UI](https://base-ui.com?utm_source=chatgpt.com)
+
+Novo projeto dos criadores do Radix.
+
+Objetivo:
+
+* Melhor acessibilidade
+* Mais flexibilidade
+
+Muita gente acredita que substituirá parte do Radix nos próximos anos.
+
+---
+
+# 11. Park UI
+
+[Park UI](https://park-ui.com?utm_source=chatgpt.com)
+
+Design system moderno baseado em:
+
+* Panda CSS
+* Ark UI
+
+Muito elegante.
+
+---
+
+# 12. Ark UI
+
+[Ark UI](https://ark-ui.com?utm_source=chatgpt.com)
+
+Alternativa moderna ao Radix.
+
+Foco:
+
+* Acessibilidade
+* Headless Components
+
+---
+
+# O que as empresas mais modernas usam hoje?
+
+### Vercel Style
+
+Vercel
+
+```text
+React
+Next.js
+Tailwind
+Radix
+shadcn/ui
+```
+
+---
+
+### Stripe Style
+
+Stripe
+
+```text
+Design System próprio
+Tokens
+Motion
+Componentes internos
+```
+
+---
+
+### Linear Style
+
+Linear
+
+```text
+React
+Tailwind
+Motion
+Design Tokens
+```
+
+---
+
+# Se você está construindo o DeepLanding
+
+A stack mais moderna atualmente seria:
+
+```text
+Next.js
+
+Tailwind CSS
+
+shadcn/ui
+
+Radix UI
+
+Motion
+
+GSAP
+
+Design Tokens
+
+WCAG AA
+
+Open Props
+```
+
+E se quiser algo ainda mais avançado para o futuro:
+
+```text
+Next.js
+
+UnoCSS
+
+Base UI
+
+Motion
+
+GSAP
+
+Design Tokens
+
+Open Props
+```
+
+Essa segunda combinação é a mais próxima do que muitos desenvolvedores consideram a próxima geração das stacks de interface modernas.

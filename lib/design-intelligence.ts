@@ -336,7 +336,7 @@ export function detectIndustry(prompt: string): string {
     [/\b(restaurant|restaurante|cafe|cafeteria|pizzaria|hamburger|food|culinaria|delivery|bar|pub|lanchonete)\b/i, 'restaurant'],
     [/\b(saas|software|app|plataforma|dashboard|ferramenta|tool|startup)\b/i, 'saas'],
     [/\b(loja|store|ecommerce|shop|produto|product|comprar|buy|marketplace)\b/i, 'ecommerce'],
-    [/\b(saude|health|medico|clinic|hospital|dentist|pharmacy|farmacia|medicina|wellness|spa)\b/i, 'healthcare'],
+    [/\b(sa[uú]de|health|m[eé]dic[oa]|cl[ií]nic[aá]?|hospital|dentist|pharmacy|farm[aá]cia|medicina|wellness|spa)\b/i, 'healthcare'],
     [/\b(gym|fitness|academia|workout|personal trainer|crossfit|yoga|pilates)\b/i, 'fitness'],
     [/\b(agency|agencia|portfolio|designer|criativo|creative|studio|freelancer)\b/i, 'creative'],
     [/\b(fintech|bank|banco|finance|financeiro|invest|crypto|pagamento|payment)\b/i, 'finance'],

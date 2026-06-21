@@ -32,6 +32,11 @@ import { AISetupModal } from "@/components/ai-setup-modal";
 import { hasAIConfig } from "@/lib/ai-config";
 import { isTheSameHtml } from "@/lib/compare-html-diff";
 import { downloadHtmlFile, downloadAsFullPageImage, downloadAsPdf } from "@/lib/download-utils";
+import { EditElementDialog } from "./edit-element-dialog";
+import { EditPromptDialog } from "./edit-prompt-dialog";
+import { followUpEdit } from "@/lib/client-processing";
+import { savePromptToHistory, saveSiteToHistory } from "@/lib/prompt-history";
+import type { InlineAction } from "@/components/editor/inline-toolbar";
 import DownloadGeneratedContent from "./download-generated-content";
 
 export const AppEditor = ({ project }: { project?: { html?: string } | null }) => {
@@ -60,6 +65,10 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+  // Inline editing states
+  const [selectedElementForToolbar, setSelectedElementForToolbar] = useState<HTMLElement | null>(null);
+  const [showEditPrompt, setShowEditPrompt] = useState(false);
+  const [showEditHtml, setShowEditHtml] = useState(false);
 
   // Set client state to true after hydration to prevent SSR mismatches
   useEffect(() => {
@@ -225,6 +234,177 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
     console.log("Editor validation markers:", markers);
   };
 
+  // ── Inline Editing Handlers ──────────────────────────────────────────
+
+  /** Replace a single element's outerHTML inside the full document. */
+  const replaceElementInHtml = (
+    oldOuterHtml: string,
+    newOuterHtml: string
+  ): string => {
+    const idx = html.indexOf(oldOuterHtml);
+    if (idx === -1) {
+      // Fallback: try to match after the closing tag of the element's tag name
+      toast.error("Could not locate the element in the HTML.");
+      return html;
+    }
+    return html.slice(0, idx) + newOuterHtml + html.slice(idx + oldOuterHtml.length);
+  };
+
+  /** "Edit with AI" — send an element-specific prompt via followUpEdit. */
+  const handleInlinePrompt = async (prompt: string) => {
+    if (!selectedElementForToolbar || isAiWorking) return;
+    if (!hasAIConfig()) {
+      toast.error("Please configure your AI provider in Settings first.");
+      setShowSetup(true);
+      return;
+    }
+
+    setIsAiWorking(true);
+    setSelectedElementForToolbar(null);
+
+    try {
+      const elementHtml = selectedElementForToolbar.outerHTML;
+      const fence = '```';
+      const enhancedPrompt =
+        `Edit ONLY the following element. Keep everything else unchanged.
+
+Element to edit:
+${fence}html
+${elementHtml}
+${fence}
+
+Request: ${prompt}`;
+
+      const result = await followUpEdit(
+        enhancedPrompt,
+        html,
+        prompt,
+        elementHtml
+      );
+
+      if (result.html !== html) {
+        setHtml(result.html);
+        toast.success("Element updated successfully!");
+
+        savePromptToHistory({
+          prompt: enhancedPrompt,
+          style: "inline-edit",
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+          originalPrompt: prompt,
+        });
+        saveSiteToHistory({
+          prompt: `[Inline] ${prompt}`,
+          html: result.html,
+          style: "inline-edit",
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+        });
+
+        // Highlight updated lines in Monaco
+        if (result.updatedLines?.length > 0 && monacoRef.current && editorRef.current) {
+          const decorations = result.updatedLines.map((line) => ({
+            range: new monacoRef.current.Range(line[0], 1, line[1], 1),
+            options: { inlineClassName: "matched-line" },
+          }));
+          setTimeout(() => {
+            editorRef.current?.getModel()?.deltaDecorations([], decorations);
+            editorRef.current?.revealLine(result.updatedLines![0][0]);
+          }, 100);
+        }
+      } else {
+        toast.info("No changes were made.");
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "AI edit failed.");
+    } finally {
+      setIsAiWorking(false);
+    }
+  };
+
+  /** "Edit HTML" — apply user's manual HTML edits directly. */
+  const handleInlineHtmlSave = (newOuterHtml: string) => {
+    if (!selectedElementForToolbar) return;
+    const oldHtml = selectedElementForToolbar.outerHTML;
+    const updated = replaceElementInHtml(oldHtml, newOuterHtml);
+    setHtml(updated);
+    setSelectedElementForToolbar(null);
+    toast.success("Element HTML updated!");
+
+    saveSiteToHistory({
+      prompt: "[Inline HTML Edit]",
+      html: updated,
+      style: "inline-edit",
+      mode: "classic",
+      provider: "local",
+      model: "local",
+      isFollowUp: true,
+    });
+  };
+
+  /** "Regenerate" — ask AI to produce a new variation of the element. */
+  const handleInlineRegenerate = async () => {
+    if (!selectedElementForToolbar || isAiWorking) return;
+    if (!hasAIConfig()) {
+      toast.error("Please configure your AI provider in Settings first.");
+      setShowSetup(true);
+      return;
+    }
+
+    setIsAiWorking(true);
+    const elementHtml = selectedElementForToolbar.outerHTML;
+    setSelectedElementForToolbar(null);
+
+    try {
+      const fence = '```';
+      const regeneratePrompt =
+        `Regenerate ONLY the following element with a fresh, different variation.
+Keep the same purpose and structure but change the styling, content details, or layout slightly.
+Keep everything else in the page unchanged.
+
+Element to regenerate:
+${fence}html
+${elementHtml}
+${fence}`;
+
+      const result = await followUpEdit(regeneratePrompt, html, regeneratePrompt, elementHtml);
+
+      if (result.html !== html) {
+        setHtml(result.html);
+        toast.success("Element regenerated!");
+
+        savePromptToHistory({
+          prompt: `[Regenerate] ${regeneratePrompt}`,
+          style: "inline-edit",
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+          originalPrompt: regeneratePrompt,
+        });
+        saveSiteToHistory({
+          prompt: "[Inline Regenerate]",
+          html: result.html,
+          style: "inline-edit",
+          mode: "classic",
+          provider: "api",
+          model: "local",
+          isFollowUp: true,
+        });
+      } else {
+        toast.info("No changes were made.");
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Regeneration failed.");
+    } finally {
+      setIsAiWorking(false);
+    }
+  };
+
   return (
     <section className="h-[100dvh] bg-neutral-950 flex flex-col">
       <Header tab={currentTab} onNewTab={setCurrentTab} />
@@ -329,6 +509,7 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
                   });
                   setHtmlHistory(currentHistory);
                   setSelectedElement(null);
+                  setSelectedElementForToolbar(null);
                   // if xs or sm
                   if (isClient && window.innerWidth <= 1024) {
                     setCurrentTab("preview");
@@ -390,6 +571,30 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
             setSelectedElement(element);
             setCurrentTab("chat");
           }}
+          onClickElementWithToolbar={(element) => {
+            setIsEditableModeEnabled(false);
+            setSelectedElement(element);
+            setSelectedElementForToolbar(element);
+          }}
+          selectedElementForToolbar={selectedElementForToolbar}
+          onDismissToolbar={() => {
+            setSelectedElementForToolbar(null);
+            setSelectedElement(null);
+          }}
+          onInlineAction={(action: InlineAction) => {
+            if (!selectedElementForToolbar) return;
+            switch (action) {
+              case "edit-prompt":
+                setShowEditPrompt(true);
+                break;
+              case "edit-html":
+                setShowEditHtml(true);
+                break;
+              case "regenerate":
+                handleInlineRegenerate();
+                break;
+            }
+          }}
         />
       </main>
       <Footer
@@ -415,6 +620,26 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
         setDevice={setDevice}
         onOpenSettings={() => setShowSetup(true)}
       />
+      {/* Inline Editing Dialogs */}
+      {selectedElementForToolbar && (
+        <>
+          <EditPromptDialog
+            open={showEditPrompt}
+            onClose={() => setShowEditPrompt(false)}
+            elementTag={selectedElementForToolbar.tagName.toLowerCase()}
+            elementText={selectedElementForToolbar.textContent?.trim().slice(0, 200) ?? ""}
+            isAiWorking={isAiWorking}
+            onSend={(prompt) => handleInlinePrompt(prompt)}
+          />
+          <EditElementDialog
+            open={showEditHtml}
+            onClose={() => setShowEditHtml(false)}
+            elementHtml={selectedElementForToolbar.outerHTML}
+            isAiWorking={isAiWorking}
+            onSave={(newHtml) => handleInlineHtmlSave(newHtml)}
+          />
+        </>
+      )}
       <AISetupModal open={showSetup} onClose={() => setShowSetup(false)} />
     </section>
   );

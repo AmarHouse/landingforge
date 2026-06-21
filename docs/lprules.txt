@@ -1,0 +1,703 @@
+Se o objetivo é criar uma IA que gere landing pages de nível **Stripe, Apple, Linear, Vercel, Notion, Airbnb, Framer e Shopify**, então você precisa combinar dezenas de disciplinas diferentes. A maioria dos geradores atuais conhece apenas 10-20% delas.
+
+As principais "leis" e frameworks de excelência são:
+
+---
+
+# 1. WCAG (Acessibilidade)
+
+Base obrigatória.
+
+Abrange:
+
+* Contraste
+* Navegação por teclado
+* Leitores de tela
+* Hierarquia semântica
+* Estados de foco
+* Alt text
+
+Regras importantes:
+
+AA:
+
+* Texto normal ≥ 4.5:1
+* Texto grande ≥ 3:1
+
+AAA:
+
+* Texto normal ≥ 7:1
+* Texto grande ≥ 4.5:1
+
+---
+
+# 2. Teoria das Cores
+
+Define:
+
+* Harmonia
+* Contraste
+* Emoção
+* Identidade
+
+Sistemas:
+
+### Monocromático
+
+1 cor + tonalidades
+
+### Complementar
+
+Opostas no círculo cromático
+
+### Análoga
+
+Vizinhas
+
+### Triádica
+
+3 cores equidistantes
+
+### Tetrádica
+
+4 cores balanceadas
+
+---
+
+# 3. Gestalt
+
+Talvez a teoria mais importante para UI.
+
+Princípios:
+
+### Proximidade
+
+Elementos próximos parecem relacionados.
+
+### Similaridade
+
+Elementos parecidos são agrupados mentalmente.
+
+### Continuidade
+
+Olho segue caminhos naturais.
+
+### Fechamento
+
+Cérebro completa formas.
+
+### Figura-Fundo
+
+Separação clara entre foco e contexto.
+
+---
+
+# 4. Hierarquia Visual
+
+Define a ordem de atenção.
+
+Sequência ideal:
+
+1. Headline
+2. CTA
+3. Benefício principal
+4. Imagem
+5. Prova social
+6. Detalhes
+
+Ferramentas:
+
+* Tamanho
+* Contraste
+* Cor
+* Espaço
+* Posição
+
+---
+
+# 5. Princípio de Miller
+
+Memória de curto prazo.
+
+Usuário processa:
+
+7 ± 2 itens
+
+Melhor prática moderna:
+
+3–5 itens por bloco.
+
+---
+
+# 6. Lei de Hick
+
+Quanto mais opções:
+
+Mais lenta a decisão.
+
+Landing page:
+
+Ideal:
+
+1 CTA principal.
+
+Ruim:
+
+* Comprar
+* Saber mais
+* Download
+* Ver vídeo
+* Falar com vendas
+* Comparar planos
+
+Tudo junto.
+
+---
+
+# 7. Lei de Fitts
+
+Alvos maiores são mais rápidos.
+
+CTA:
+
+Ideal:
+
+44px–60px mínimo.
+
+Mobile:
+
+48px–64px.
+
+---
+
+# 8. Lei de Jakob
+
+Usuários esperam padrões conhecidos.
+
+Exemplos:
+
+Logo → canto superior esquerdo
+
+Menu → topo
+
+CTA → hero
+
+Não reinventar.
+
+---
+
+# 9. Lei de Tesler
+
+Complexidade não desaparece.
+
+Ela deve ser absorvida pelo sistema.
+
+A landing page deve parecer simples mesmo que o produto seja complexo.
+
+---
+
+# 10. Lei de Prägnanz
+
+Versão avançada da Gestalt.
+
+O cérebro prefere:
+
+* Simplicidade
+* Simetria
+* Estruturas previsíveis
+
+---
+
+# 11. Lei de Aesthetic-Usability
+
+Algo bonito parece mais fácil de usar.
+
+Visual premium:
+
+Aumenta confiança.
+
+Mesmo sem alterar funcionalidade.
+
+---
+
+# 12. Cognitive Load Theory
+
+Carga cognitiva.
+
+Remover:
+
+* Ruído
+* Elementos inúteis
+* Texto excessivo
+
+---
+
+# 13. Information Architecture
+
+Organização do conteúdo.
+
+Landing moderna:
+
+Hero
+
+↓
+
+Benefícios
+
+↓
+
+Prova social
+
+↓
+
+Features
+
+↓
+
+Comparação
+
+↓
+
+FAQ
+
+↓
+
+CTA Final
+
+---
+
+# 14. Typography Theory
+
+Regras:
+
+Máximo:
+
+2 ou 3 famílias
+
+Escala:
+
+1.25
+1.333
+1.618
+
+(Modular Scale)
+
+Comprimento:
+
+50–75 caracteres por linha
+
+Line Height:
+
+1.5–1.8
+
+---
+
+# 15. Golden Ratio
+
+1 : 1.618
+
+Usado em:
+
+* Layout
+* Imagens
+* Tipografia
+
+---
+
+# 16. Rule of Thirds
+
+Muito usada em hero images.
+
+Dividir em:
+
+3×3
+
+Posicionar foco nas interseções.
+
+---
+
+# 17. Visual Weight Theory
+
+Peso visual criado por:
+
+* Cor
+* Contraste
+* Tamanho
+* Movimento
+
+Controla atenção.
+
+---
+
+# 18. UX Writing
+
+Microcopy.
+
+Botão ruim:
+
+"Enviar"
+
+Botão bom:
+
+"Começar Gratuitamente"
+
+---
+
+# 19. Conversion-Centered Design
+
+Toda seção responde:
+
+Por que continuar rolando?
+
+Cada bloco deve aumentar:
+
+* Interesse
+* Desejo
+* Confiança
+
+---
+
+# 20. AIDA
+
+Modelo clássico.
+
+Attention
+
+↓
+
+Interest
+
+↓
+
+Desire
+
+↓
+
+Action
+
+Landing page inteira segue isso.
+
+---
+
+# 21. Fogg Behavior Model
+
+Comportamento =
+
+Motivação × Capacidade × Gatilho
+
+CTA só converte quando os três existem.
+
+---
+
+# 22. Cialdini (Persuasão)
+
+Os 7 princípios:
+
+### Autoridade
+
+### Prova Social
+
+### Escassez
+
+### Reciprocidade
+
+### Compromisso
+
+### Afinidade
+
+### Consenso
+
+---
+
+# 23. Nielsen Heuristics
+
+10 heurísticas fundamentais.
+
+Inclui:
+
+* Feedback
+* Consistência
+* Prevenção de erros
+* Controle do usuário
+
+---
+
+# 24. Material Design Guidelines
+
+Mesmo fora do Material Design.
+
+Excelente para:
+
+* Espaçamento
+* Motion
+* Hierarquia
+
+---
+
+# 25. Human Interface Guidelines
+
+Referência da Apple.
+
+Excelente para:
+
+* Elegância
+* Clareza
+* Gestos
+* Navegação
+
+---
+
+# 26. Design Tokens
+
+Sistema moderno.
+
+Definir:
+
+* Cores
+* Radius
+* Espaçamentos
+* Sombras
+* Tipografia
+
+Antes de criar componentes.
+
+---
+
+# 27. Atomic Design
+
+Estrutura:
+
+Atoms
+
+↓
+
+Molecules
+
+↓
+
+Organisms
+
+↓
+
+Templates
+
+↓
+
+Pages
+
+---
+
+# 28. Motion Design Principles
+
+Disney + UX.
+
+Inclui:
+
+* Anticipation
+* Timing
+* Follow-through
+* Ease-in
+* Ease-out
+
+---
+
+# 29. Responsive Design
+
+Breakpoints:
+
+Mobile:
+320–767
+
+Tablet:
+768–1023
+
+Desktop:
+1024+
+
+Wide:
+1440+
+
+---
+
+# 30. Core Web Vitals
+
+Google.
+
+LCP:
+< 2.5s
+
+CLS:
+< 0.1
+
+INP:
+< 200ms
+
+---
+
+# 31. SEO Semântico
+
+Estrutura:
+
+1 H1
+
+Hierarquia correta:
+
+H1
+H2
+H3
+
+Schema.org
+
+OpenGraph
+
+Meta Tags
+
+---
+
+# 32. Design Emocional (Don Norman)
+
+3 níveis:
+
+Visceral
+
+Comportamental
+
+Reflexivo
+
+As melhores landing pages atuam nos três.
+
+---
+
+# 33. Visual Storytelling
+
+Toda landing deve contar uma história.
+
+Estrutura:
+
+Problema
+
+↓
+
+Agitação
+
+↓
+
+Solução
+
+↓
+
+Prova
+
+↓
+
+Transformação
+
+↓
+
+CTA
+
+---
+
+# 34. Sistemas de Grid
+
+12 colunas
+
+Mais usado atualmente.
+
+Alternativas:
+
+8 colunas
+
+4 colunas
+
+CSS Grid avançado
+
+---
+
+# 35. White Space Theory
+
+Espaço em branco não é vazio.
+
+Ele cria:
+
+* Luxo
+* Clareza
+* Hierarquia
+
+---
+
+# 36. Design System Consistency
+
+Toda decisão deve ser consistente:
+
+* Radius
+* Sombras
+* Espaçamento
+* Tipografia
+* Motion
+
+---
+
+# 37. Neurodesign
+
+Usado por Apple, Stripe, Tesla.
+
+Combina:
+
+* Psicologia cognitiva
+* Percepção visual
+* Neuromarketing
+* UX
+
+---
+
+# 38. Eye Tracking Patterns
+
+F Pattern
+
+Z Pattern
+
+Layer Cake Pattern
+
+Landing pages normalmente usam:
+
+Z + F combinados.
+
+---
+
+# 39. Trust Design
+
+Elementos que aumentam confiança:
+
+* Logos de clientes
+* Certificações
+* Reviews
+* Casos de sucesso
+* Números reais
+
+---
+
+# 40. Premium SaaS Design Framework (estado da arte)
+
+Empresas como:
+
+Stripe
+Linear
+Vercel
+Notion
+Framer
+
+Misturam:
+
+* Swiss Design
+* Typography First
+* Gestalt
+* White Space Theory
+* Motion Design
+* WCAG
+* Conversion Design
+* Neurodesign
+* Design Tokens
+* Core Web Vitals
+
+Esse conjunto representa aproximadamente o que existe de mais próximo de um "manual universal de excelência" para landing pages modernas. Uma IA treinada para seguir essas 40 disciplinas simultaneamente já estaria muito acima da maioria dos construtores automáticos atuais.

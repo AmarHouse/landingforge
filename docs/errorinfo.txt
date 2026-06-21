@@ -1,0 +1,35 @@
+## Error Type
+Build Error
+
+## Error Message
+Parsing ecmascript source code failed
+
+## Build Output
+./lib/style-modern-css.ts:458:18
+Parsing ecmascript source code failed
+  456 |
+  457 |   // Scroll-margin-top for fixed header offset — prevents sections from hiding behind navbar
+> 458 |   injectedCSS += '\n/* Fixed header offset — sections scroll below navbar */\nhtml { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  459 | section[id] { scroll-margin-top: 5rem; }
+  460 | img:not([width]) { max-width: 100%; height: auto; }
+  461 | ';
+
+Unterminated string constant
+
+Import traces:
+  Client Component Browser:
+    ./lib/style-modern-css.ts [Client Component Browser]
+    ./lib/client-processing.ts [Client Component Browser]
+    ./components/editor/index.tsx [Client Component Browser]
+    ./components/editor/index.tsx [Server Component]
+    ./app/(public)/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/style-modern-css.ts [Client Component SSR]
+    ./lib/client-processing.ts [Client Component SSR]
+    ./components/editor/index.tsx [Client Component SSR]
+    ./components/editor/index.tsx [Server Component]
+    ./app/(public)/page.tsx [Server Component]
+
+Next.js version: 15.5.19 (Turbopack)

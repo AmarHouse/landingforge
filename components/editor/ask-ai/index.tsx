@@ -18,6 +18,7 @@ import { FollowUpTooltip } from "./follow-up-tooltip";
 import { isTheSameHtml } from "@/lib/compare-html-diff";
 
 import { getStyleById } from "@/lib/design-styles";
+import { enhancePrompt } from "@/lib/prompt-enhancer";
 import { StyleSelector } from "./style-selector";
 import { PromptHistory } from "./prompt-history";
 import { SiteHistory } from "./site-history";
@@ -103,12 +104,14 @@ export function AskAI({
     setOpenThink(false);
     setIsThinking(true);
 
-    // Enhance prompt with style
+    // Enhance prompt: intelligence layer only for new generations, not follow-ups
     const selectedStyleConfig = getStyleById(selectedStyle as string);
+    const isFollowUpCall = isFollowUp && !redesignMarkdown && !isSameHtml;
+    const intelligenceEnhanced = enhancePrompt(prompt, isFollowUpCall);
     const enhancedPrompt =
       selectedStyleConfig && selectedStyleConfig.id !== "default"
-        ? `${prompt}\n\nSTYLE REQUIREMENT: ${selectedStyleConfig.prompt}`
-        : prompt;
+        ? `${intelligenceEnhanced}\n\nSTYLE REQUIREMENT: ${selectedStyleConfig.prompt}`
+        : intelligenceEnhanced;
 
     let contentResponse = "";
     let thinkResponse = "";
@@ -157,7 +160,7 @@ export function AskAI({
         const userContent = redesignMarkdown
           ? `Here is my current design as a markdown:\n\n${redesignMarkdown}\n\nNow, please create a new design based on this markdown.`
           : (isSameHtml ? "" : html)
-            ? `Here is my current HTML code:\n\n\`\`\`html\n${isSameHtml ? "" : html}\n\`\`\`\n\nNow, please create a new design based on this HTML.`
+            ? `Here is my current HTML code:\n\n\`\`\`html\n${html}\n\`\`\`\n\nNow, please create a new design based on this HTML.\n\nUser's request: ${enhancedPrompt}`
             : enhancedPrompt;
 
         const abortController = new AbortController();

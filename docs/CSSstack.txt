@@ -1,0 +1,156 @@
+DeepSite (LandingForge) — CSS & Design Stack
+=============================================
+
+Este documento documenta a stack real de CSS/design usada no projeto DeepSite,
+explicando por que cada ferramenta foi escolhida e como ela se encaixa no fluxo
+de geração de landing pages por IA.
+
+
+## VISÃO GERAL
+
+O DeepSite tem duas camadas distintas:
+
+1. **Editor (React/Next.js)** — A aplicação web onde o usuário interage com a IA
+2. **Sites Gerados (HTML Standalone)** — As landing pages que a IA produz como output
+
+A stack de CSS é diferente para cada camada.
+
+
+## CAMADA 1: EDITOR (React/Next.js)
+
+### Framework
+- **Next.js 15** com App Router + Turbopack
+  - SSR/SSG para performance
+  - App Router para layouts aninhados
+  - Turbopack para dev fast-refresh
+
+### Estilização
+- **Tailwind CSS 4** — Utility-first para UI do editor
+  - Velocidade de desenvolvimento
+  - Consistência visual
+  - Hot reload instantâneo
+
+### Componentes UI
+- **shadcn/ui** — Componentes React acessíveis e customizáveis
+  - Baseado em Radix UI (headless components)
+  - Código próprio (copy-paste, não npm package)
+  - Alta customização via Tailwind
+  - Usado para: Button, Dialog, Input, Select, Tooltip, Tabs, etc.
+
+- **Radix UI** — Primitivos headless (via shadcn/ui)
+  - Acessibilidade WCAG AA built-in
+  - Keyboard navigation automática
+  - Sem estilos próprios (100% customizável)
+
+### Animações
+- **react-use** — Hooks utilitários (useLocalStorage, useUpdateEffect, etc.)
+- **CSS transitions** — Micro-interações nativas
+- **IntersectionObserver API** — Scroll-triggered animations
+
+### Ícones
+- **Lucide React** — Ícones SVG consistentes
+- **React Icons** — Ícones adicionais quando necessário
+
+### Editor de Código
+- **Monaco Editor** — Editor HTML inline com syntax highlighting
+
+
+## CAMADA 2: SITES GERADOS (HTML Standalone)
+
+### Framework CSS
+- **Tailwind CSS via CDN** — Utility-first para sites gerados
+  - Carregado via <script> no <head> (NÃO dinâmico via JS)
+  - Permite IA gerar layouts com classes utilitárias conhecidas
+  - Fallback CSS nativo garante layout antes do CDN carregar
+
+### Design Tokens
+- **Open Props (curated subset)** — CSS custom properties para design system
+  - Spacing scale (4px base): --space-1 a --space-32
+  - Border radius: --radius-sm a --radius-full
+  - Shadows: --shadow-xs a --shadow-xl
+  - Font sizes (modular scale 1.25): --font-size-xs a --font-size-5xl
+  - Line heights: --line-height-tight a --line-height-loose
+  - Letter spacing: --letter-spacing-tight a --letter-spacing-wider
+  - Transitions: --ease-default, --duration-fast/slow
+  - Z-index scale: --z-10 a --z-toast
+
+### Fallback CSS Nativo
+- **style-modern-css.ts** — Sistema de injeção automática de CSS fallback
+  - Utilitários Tailwind nativos (flex, grid, gap, margin, padding)
+  - Scroll-driven animations (animation-timeline: view())
+  - content-visibility para performance
+  - prefers-reduced-motion para acessibilidade
+  - Fluid typography com clamp()
+  - Open Props design tokens
+
+### Tipografia
+- **Google Fonts** — Fontes premium via CDN
+  - Playfair Display (luxury/editorial)
+  - Space Grotesk (modern/tech)
+  - Lexend (corporate/trust)
+  - Poppins (friendly/warm)
+  - Bebas Neue (bold/impact)
+  - Inter (universal clean)
+  - + body font pairing (DM Sans, Source Sans 3, Open Sans)
+
+### Imagens
+- **Pexels API** — Fotos gratuitas de alta qualidade
+  - URLs otimizadas com width/dpr parameters
+  - IDs mapeados por indústria (hotel, restaurant, tech, etc.)
+  - Object-fit: cover para consistência
+
+### SEO & Acessibilidade
+- Schema.org JSON-LD estruturado
+- Open Graph + Twitter Cards meta tags
+- WCAG AA contrast (4.5:1 minimum)
+- Heading hierarchy (h1 → h2 → h3)
+- Alt text em todas as imagens
+- aria-labels em elementos interativos
+- prefers-reduced-motion respectado
+
+
+## POR QUE ESTA STACK?
+
+### Alternativas consideradas e rejeitadas:
+
+| Framework    | Por que NÃO usamos                          |
+|-------------|---------------------------------------------|
+| UnoCSS      | Build-time only, não funciona via CDN        |
+| Panda CSS   | Requer build pipeline, não HTML standalone   |
+| StyleX      | Meta-only, requer build                      |
+| Chakra UI   | Component library React, não gera HTML       |
+| Mantine     | Component library React, não gera HTML       |
+| Base UI     | Headless React components, não aplicável     |
+
+### Por que Tailwind CDN para sites gerados?
+
+1. **IA consegue gerar** — Classes utilitárias são previsíveis e bem documentadas
+2. **Zero config** — Funciona sem build tools
+3. **Consistência** — Mesmas classes = mesmo resultado visual
+4. **Fallback nativo** — Se CDN falhar, CSS nativo mantém layout
+
+### Por que Open Props como design tokens?
+
+1. **Consistência** — Escalas padronizadas (spacing, radius, shadows)
+2. **Customização** — Tokens CSS podem ser override por variáveis do tema
+3. **Zero dependência** — CSS variables nativas, sem JS
+4. **Complementa Tailwind** — Tokens para design system, Tailwind para layout
+
+
+## FLUXO DE GERAÇÃO
+
+1. Usuário descreve o site (prompt)
+2. IA gera HTML com classes Tailwind + CSS custom properties
+3. Review pass valida qualidade (tipografia, spacing, cores, acessibilidade)
+4. CSS fallback injeta: Open Props tokens + utilitários nativos + scroll animations
+5. Resultado: HTML standalone que funciona em qualquer navegador
+
+
+## ARQUIVOS RELACIONADOS
+
+- lib/prompts.ts — System prompts com regras de design
+- lib/style-modern-css.ts — Fallback CSS + Open Props tokens
+- lib/design-intelligence.ts — Perfis de indústria + paletas
+- lib/anti-slop.ts — Regras anti-padrão genérico
+- lib/design-styles.ts — 25+ estilos de design configuráveis
+- lib/providers.ts — Mapeamento de provedores AI

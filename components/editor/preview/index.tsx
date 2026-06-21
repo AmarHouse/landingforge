@@ -1,12 +1,13 @@
 "use client";
 import { useUpdateEffect } from "react-use";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import classNames from "classnames";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { GridPattern } from "@/components/magic-ui/grid-pattern";
 import { htmlTagToText } from "@/lib/html-tag-to-text";
+import { InlineToolbar, type InlineAction } from "@/components/editor/inline-toolbar";
 
 export const Preview = ({
   html,
@@ -18,6 +19,10 @@ export const Preview = ({
   iframeRef,
   isEditableModeEnabled,
   onClickElement,
+  onClickElementWithToolbar,
+  onInlineAction,
+  selectedElementForToolbar,
+  onDismissToolbar,
 }: {
   html: string;
   isResizing: boolean;
@@ -28,6 +33,10 @@ export const Preview = ({
   currentTab: string;
   isEditableModeEnabled?: boolean;
   onClickElement?: (element: HTMLElement) => void;
+  onClickElementWithToolbar?: (element: HTMLElement) => void;
+  onInlineAction?: (action: InlineAction) => void;
+  selectedElementForToolbar?: HTMLElement | null;
+  onDismissToolbar?: () => void;
 }) => {
   const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(
     null
@@ -60,7 +69,12 @@ export const Preview = ({
       if (iframeDocument) {
         const targetElement = event.target as HTMLElement;
         if (targetElement !== iframeDocument.body) {
-          onClickElement?.(targetElement);
+          // If we have the toolbar callback, use the new flow
+          if (onClickElementWithToolbar) {
+            onClickElementWithToolbar(targetElement);
+          } else {
+            onClickElement?.(targetElement);
+          }
         }
       }
     }
@@ -100,6 +114,46 @@ export const Preview = ({
     return hoveredElement;
   }, [hoveredElement, isEditableModeEnabled]);
 
+  // Compute bounding rect for the toolbar target
+  const [toolbarRect, setToolbarRect] = useState<DOMRect | null>(null);
+
+  // Update toolbar position when selectedElementForToolbar changes or on scroll/resize
+  const updateToolbarRect = useCallback(() => {
+    if (selectedElementForToolbar && iframeRef?.current) {
+      const rect = selectedElementForToolbar.getBoundingClientRect();
+      setToolbarRect(rect);
+    } else {
+      setToolbarRect(null);
+    }
+  }, [selectedElementForToolbar, iframeRef]);
+
+  useEffect(() => {
+    updateToolbarRect();
+  }, [updateToolbarRect]);
+
+  // Keep toolbar position updated on scroll/resize within iframe
+  useEffect(() => {
+    if (!selectedElementForToolbar || !iframeRef?.current) return;
+
+    const iframeDoc = iframeRef.current.contentDocument;
+    if (!iframeDoc) return;
+
+    let rafId: number;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateToolbarRect);
+    };
+
+    iframeDoc.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      iframeDoc.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [selectedElementForToolbar, iframeRef, updateToolbarRect]);
+
   return (
     <div
       ref={ref}
@@ -129,7 +183,8 @@ export const Preview = ({
           "[mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
         )}
       />
-      {!isAiWorking && hoveredElement && selectedElement && (
+      {/* Hover highlight (editable mode) */}
+      {!isAiWorking && !selectedElementForToolbar && hoveredElement && selectedElement && (
         <div
           className="cursor-pointer absolute bg-sky-500/10 border-[2px] border-dashed border-sky-500 rounded-r-lg rounded-b-lg p-3 z-10 pointer-events-none"
           style={{
@@ -147,6 +202,33 @@ export const Preview = ({
             {htmlTagToText(selectedElement.tagName.toLowerCase())}
           </span>
         </div>
+      )}
+      {/* Selected element highlight (after click) */}
+      {!isAiWorking && selectedElementForToolbar && toolbarRect && (
+        <>
+          <div
+            className="absolute bg-sky-500/10 border-2 border-sky-500 rounded-lg p-3 z-10 pointer-events-none transition-all duration-150"
+            style={{
+              top: toolbarRect.top + (currentTab === "preview" ? 0 : 24),
+              left: toolbarRect.left + (currentTab === "preview" ? 0 : 24),
+              width: toolbarRect.width,
+              height: toolbarRect.height,
+            }}
+          >
+            <span className="bg-sky-500 rounded-t-md text-sm text-neutral-100 px-2 py-0.5 -translate-y-7 absolute top-0 left-0">
+              {htmlTagToText(selectedElementForToolbar.tagName.toLowerCase())}
+            </span>
+          </div>
+          {/* Inline Toolbar */}
+          {onInlineAction && onDismissToolbar && (
+            <InlineToolbar
+              targetRect={toolbarRect}
+              isAiWorking={isAiWorking}
+              onAction={onInlineAction}
+              onDismiss={onDismissToolbar}
+            />
+          )}
+        </>
       )}
       <iframe
         id="preview-iframe"
