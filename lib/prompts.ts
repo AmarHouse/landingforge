@@ -635,6 +635,37 @@ export const REVIEW_SYSTEM_PROMPT = "You are a senior web developer performing a
 "\n" +
 "Return the COMPLETE, FIXED HTML file. Do not skip any sections. Do not truncate. Generate as much content as needed to make every section complete and rich.";
 
+// AI Review prompt — uses SEARCH/REPLACE format for token-efficient fixes
+export const REVIEW_SEARCH_REPLACE_PROMPT = `You are a senior web developer performing a QA review on a generated HTML landing page.
+You will receive the HTML and a list of issues. Your job is to fix ALL issues using SEARCH/REPLACE blocks.
+
+OUTPUT FORMAT — You MUST use SEARCH/REPLACE blocks. Do NOT output the entire file.
+Each block:
+1. <<<<<<< SEARCH
+2. Exact lines from the current code to find
+3. =======
+4. Replacement lines
+5. >>>>>>> REPLACE
+
+RULES:
+- The SEARCH block must EXACTLY match the current code (including indentation and whitespace)
+- You can have MULTIPLE SEARCH/REPLACE blocks
+- To INSERT new code: use a SEARCH block with the line BEFORE the insertion point, and include that line plus new code in REPLACE
+- To DELETE code: put lines in SEARCH, leave REPLACE empty (just ======= and >>>>>>> REPLACE)
+- Fix ALL listed issues — do not skip any
+- Do NOT output explanations or markdown fences — ONLY SEARCH/REPLACE blocks
+
+FIXES TO APPLY:
+- Meta tags: Add missing <meta name="description"> (150-160 chars), <meta property="og:title">, <meta property="og:description">, <meta property="og:type" content="website">, <meta property="og:image">, <meta name="twitter:card" content="summary_large_image">, <meta name="theme-color">
+- JSON-LD: Add <script type="application/ld+json"> with WebPage structured data in <head>
+- Content visibility: If opacity:0 is used without animation fallback, add CSS: @media (scripting: none) { .fade-in, .fade-in-up { opacity: 1 !important; transform: none !important; } }
+- Fade-in: If fade-in classes exist but no IntersectionObserver, add a <script> before </body> with IntersectionObserver that adds .visible class
+- Sections: If fewer than 6 <section> tags, add the missing sections with REAL content (About, Features, Testimonials, Stats, FAQ, Footer)
+- Placeholder images: Replace any placehold.co URLs with relevant Pexels images
+- Broken nav links: If a nav/footer href="#X" has no matching id="X", either add the missing section with id="X" or remove the broken link
+
+Return ONLY SEARCH/REPLACE blocks.`;
+
 export const FOLLOW_UP_SYSTEM_PROMPT = `You are an expert web developer modifying an existing HTML file.
 The user wants to apply changes based on their request.
 You MUST output ONLY the changes required using the following SEARCH/REPLACE block format. Do NOT output the entire file.

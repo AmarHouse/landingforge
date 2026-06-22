@@ -6,7 +6,7 @@
 import { chatCompletion, type ChatMessage } from "./openai-client";
 import { fixTruncatedHtml } from "./fix-html";
 import { injectModernCSSFallback } from "./style-modern-css";
-import { REVIEW_SYSTEM_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, BRIEFING_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
+import { REVIEW_SEARCH_REPLACE_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, BRIEFING_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
 
 /**
  * Apply SEARCH/REPLACE patches from AI response to HTML.
@@ -132,32 +132,50 @@ export async function generateBriefing(userPrompt: string): Promise<BriefingResu
 }
 
 export async function reviewHtml(html: string): Promise<string> {
-  // Fix truncated HTML first
+  // Fix truncated HTML first (close unclosed tags — no API cost)
   const fixedHtml = fixTruncatedHtml(html);
-
-  // Quick validation: check if HTML has critical issues that need AI review
-  const needsAiReview =
-    !fixedHtml.includes("<!DOCTYPE html>") ||
-    !fixedHtml.includes("</html>") ||
-    !fixedHtml.includes('<meta name="description"') ||
-    !fixedHtml.includes('<meta property="og:title"') ||
-    (fixedHtml.includes("opacity: 0") && !fixedHtml.includes("animation-timeline")) ||
-    (fixedHtml.includes("fade-in") && !fixedHtml.includes("animation-timeline") && !fixedHtml.includes("IntersectionObserver"));
 
   // Always inject CSS fallback (cheap, no API cost)
   const processedHtml = injectModernCSSFallback(fixedHtml);
 
-  if (!needsAiReview) {
+  // Quick validation: check which issues need AI review
+  const issues: string[] = [];
+  if (!fixedHtml.includes('<meta name="description"')) issues.push('Missing meta description');
+  if (!fixedHtml.includes('<meta property="og:title"')) issues.push('Missing Open Graph tags');
+  if (!fixedHtml.includes('<meta name="theme-color"')) issues.push('Missing theme-color meta');
+  if (!fixedHtml.includes('JSON-LD') && !fixedHtml.includes('application/ld+json')) issues.push('Missing JSON-LD structured data');
+  if ((fixedHtml.includes('opacity: 0') || fixedHtml.includes('opacity:0')) && !fixedHtml.includes('animation-timeline') && !fixedHtml.includes('IntersectionObserver')) issues.push('Invisible content: opacity:0 without animation fallback');
+  if (fixedHtml.includes('fade-in') && !fixedHtml.includes('animation-timeline') && !fixedHtml.includes('IntersectionObserver')) issues.push('Fade-in classes without animation JS');
+
+  // Check content completeness — count sections
+  const sectionCount = (fixedHtml.match(/<section[\s>]/gi) || []).length;
+  if (sectionCount < 6) issues.push(`Only ${sectionCount} sections found (need 8+)`);
+
+  // Check for placeholder images
+  if (fixedHtml.includes('placehold.co') || fixedHtml.includes('placeholder.')) issues.push('Contains placeholder images — replace with Pexels');
+
+  // Check for broken nav links
+  const navLinks = fixedHtml.match(/href="#([^"]+)"/g) || [];
+  for (const link of navLinks) {
+    const id = link.match(/href="#([^"]+)"/)?.[1];
+    if (id && !fixedHtml.includes(`id="${id}"`)) {
+      issues.push(`Broken nav link: #${id} has no matching element`);
+    }
+  }
+
+  if (issues.length === 0) {
     return processedHtml;
   }
 
+  // Use SEARCH/REPLACE format for review — much more token-efficient than returning entire HTML
   try {
+    const issueList = issues.map((issue, i) => `${i + 1}. ${issue}`).join('\n');
     const chunk = await chatCompletion({
       messages: [
-        { role: "system", content: REVIEW_SYSTEM_PROMPT },
+        { role: "system", content: REVIEW_SEARCH_REPLACE_PROMPT },
         {
           role: "user",
-          content: `Review and fix this HTML landing page. Return the COMPLETE corrected HTML file.\n\n\`\`\`html\n${fixedHtml}\n\`\`\``,
+          content: `Review and fix this HTML landing page. Return ONLY SEARCH/REPLACE blocks for the issues found.\n\nISSUES FOUND:\n${issueList}\n\n\`\`\`html\n${fixedHtml}\n\`\`\``,
         },
       ],
       maxTokens: 32768,
@@ -165,20 +183,9 @@ export async function reviewHtml(html: string): Promise<string> {
 
     if (!chunk) return processedHtml;
 
-    // Clean up the reviewed HTML
-    let reviewedHtml = chunk
-      .replace(/^\s*```(?:html)?\s*\n?/i, "")
-      .replace(/\s*```\s*$/, "")
-      .trim();
-
-    if (!reviewedHtml.toUpperCase().startsWith("<!DOCTYPE")) {
-      reviewedHtml = `<!DOCTYPE html>\n${reviewedHtml}`;
-    }
-    if (!reviewedHtml.includes("</html>")) {
-      reviewedHtml = `${reviewedHtml}\n</body>\n</html>`;
-    }
-
-    return injectModernCSSFallback(reviewedHtml);
+    // Apply SEARCH/REPLACE patches
+    const { html: patchedHtml } = applySearchReplace(chunk, processedHtml);
+    return injectModernCSSFallback(patchedHtml);
   } catch {
     // If review fails, still return the CSS-injected version
     return processedHtml;
