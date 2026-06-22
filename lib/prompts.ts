@@ -122,7 +122,7 @@ export const INITIAL_SYSTEM_PROMPT = `You are an expert web developer creating a
 7. **Stats / Social Proof Section** — Large animated counters or stat cards (e.g., "500+ Projects", "98% Satisfaction", "10+ Years")
 8. **Pricing or CTA Section** — Either a pricing table (3 tiers) or a compelling call-to-action banner with gradient background
 9. **FAQ Section** — 5-6 frequently asked questions with expandable accordion answers (use <details> elements or JS toggle)
-10. **Footer** — Multi-column footer with company info, nav links, social media icons, newsletter signup form, copyright
+10. **Footer** — Multi-column footer with company info, nav links, social media icons, newsletter signup form, contact info with physical address, copyright. CRITICAL: If the business has a physical address/location, include an embedded Google Maps iframe (use \`https://www.google.com/maps/embed?pb=...\` with the business address in the URL query params, or use \`https://maps.google.com/maps?q=ADDRESS&t=&z=14&ie=UTF8&iwloc=&output=embed\`). The iframe MUST have: width=\"100%\", height=\"300\", style=\"border:0;\", allowfullscreen, loading=\"lazy\", referrerpolicy=\"no-referrer-when-downgrade\". Wrap it in a responsive container with rounded corners and shadow.
 
 🎨 DESIGN:
 - Use semantic HTML: <header>, <nav>, <main>, <section>, <footer>
@@ -264,7 +264,7 @@ export const ENHANCED_SYSTEM_PROMPT = `You are a senior web architect creating a
 8. **Pricing Section** — 3-tier pricing table. Use industry-APPROPRIATE tier names — NEVER use 'Basic/Pro/Enterprise' for hotels, restaurants, or healthcare. For hospitality: 'Standard', 'Master', 'Premium' or room-type names. For SaaS: 'Basic', 'Pro', 'Enterprise'. For restaurants: 'Individual', 'Casal', 'Família'. Each tier: price, billing period, feature list with checkmarks, CTA button. Middle tier highlighted as 'Most Popular' with a badge and different color.
 9. **FAQ Section** — 5-6 questions with expandable answers using <details name="faq"> elements (native exclusive accordion). Each answer should be 2-3 sentences with useful, specific information.
 10. **Newsletter / CTA Banner** — Full-width section with gradient background, compelling headline, email input + submit button. CRITICAL: Input fields MUST have \`bg-white\` class (or \`style="background:white"\`) for visibility over gradient backgrounds. A transparent input on a colored gradient is invisible. Brief value proposition.
-11. **Footer** — 4-column layout: company logo + description, quick links, resources/services, contact info + social icons. Bottom bar with copyright and legal links. Footer year MUST be current year (never show outdated year like 2024 when it's 2025/2026). Social media links MUST have real URLs (https://instagram.com/brand) or be omitted entirely — NEVER use href="#" for social links as broken links destroy credibility.
+11. **Footer** — 4-column layout: company logo + description, quick links, resources/services, contact info + social icons. Bottom bar with copyright and legal links. Footer year MUST be current year (never show outdated year like 2024 when it's 2025/2026). Social media links MUST have real URLs (https://instagram.com/brand) or be omitted entirely — NEVER use href="#" for social links as broken links destroy credibility. CRITICAL: If the business has a physical address/location, include an embedded Google Maps iframe below the contact info column. Use \`https://www.google.com/maps/embed?pb=...\` or \`https://maps.google.com/maps?q=ADDRESS&t=&z=14&ie=UTF8&iwloc=&output=embed\`. The iframe MUST have: width=\"100%\", height=\"300\", style=\"border:0;\", allowfullscreen, loading=\"lazy\", referrerpolicy=\"no-referrer-when-downgrade\". Wrap in a responsive container with rounded corners and shadow.
 
 🎨 DESIGN SYSTEM:
 - Semantic HTML: <header>, <nav>, <main>, <section>, <footer>
@@ -391,7 +391,8 @@ VISUAL POLISH (what separates good from great):
 
 BUTTONS (the most important interactive element — must look premium):
 - Primary CTA: solid background with dark text on light bg, OR light text on dark bg. NEVER same-luminance combos.
-- Size: min-height 48px, padding 14px 32px, font-weight 600-700, letter-spacing 0.01em.
+- Size: min-height 48px, padding 16px 36px (CTA buttons in header and hero MUST have generous horizontal padding — text must NEVER feel cramped or pressed against the edges). font-weight 600-700, letter-spacing 0.01em.
+- NAV CTA BUTTON: The CTA button in the navigation bar MUST have at least px-8 py-3 (or padding: 12px 32px minimum). The button must look spacious and premium — the text should breathe inside it. NEVER use px-3 or px-4 on header CTA buttons.
 - Border-radius: ONE style across entire page — either pill (9999px) for modern OR rounded-lg (8-12px) for professional. NEVER mix styles.
 - Hover: subtle scale(1.02-1.05) + shadow increase + color darken. NEVER opacity-only hover.
 - Box-shadow on rest state: 0 2px 8px rgba(0,0,0,0.1) for subtle depth. On hover: 0 4px 16px rgba(0,0,0,0.15).
@@ -510,7 +511,7 @@ REQUIRED SECTIONS (in order):
 8. Pricing or CTA — 3-tier pricing table OR compelling call-to-action banner
 9. FAQ — 5-6 expandable questions with detailed answers
 10. Newsletter/CTA — Email signup with value proposition
-11. <footer> — Multi-column with links, contact, social, copyright
+11. <footer> — Multi-column with links, contact info, physical address with Google Maps iframe embed, social, copyright
 
 IMPORTANT: Do NOT skip any section. Do NOT use placeholder text. Each section must have REAL, DETAILED, PERSUASIVE content. The page must be at least 500 lines of HTML. Generate as much content as possible before writing </html>.
 `;
