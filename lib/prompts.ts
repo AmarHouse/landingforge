@@ -156,6 +156,16 @@ For hero backgrounds: use CSS background-image with dark overlay. For content im
 - <meta name="robots" content="index, follow">
 - CONTRAST (WCAG AA): text MUST have 4.5:1 contrast ratio minimum. NEVER use white or light text on yellow/cream/light backgrounds. Dark backgrounds → light text. Light backgrounds → dark text. On yellow/gold backgrounds, use dark text (black, dark brown, dark green). On gradient backgrounds, ensure text is readable on ALL parts of the gradient.
 
+🤖 AGENT-CENTRIC ACCESSIBILITY (for Lighthouse Agentic Browsing audit):
+- Every interactive element (<a>, <button>, <input>, <select>, <textarea>) MUST have a programmatic name: use aria-label, aria-labelledby, or ensure visible text content serves as the accessible name.
+- NEVER use aria-hidden="true" on interactive elements or their parents — agents cannot interact with hidden elements.
+- Heading hierarchy MUST be perfect: h1 → h2 → h3, never skip levels. Only ONE h1 per page.
+- All form inputs MUST have associated <label> elements (for="id") or aria-label attributes.
+- Images used as links MUST have alt text describing the destination, not just the image.
+- Use semantic HTML elements (<header>, <nav>, <main>, <section>, <footer>, <article>) — agents use the accessibility tree as their primary data model.
+- ARIA attributes (role, aria-expanded, aria-controls, etc.) must be valid and correctly matched to element functions.
+- Content that is visually hidden but interactive (e.g., mobile menu) must remain in the accessibility tree — use CSS techniques that preserve tree presence (clip-path, sr-only class) rather than display:none or aria-hidden.
+
 ⚠️ CONTRAST COLOR RULES (follow strictly — these cause the most visual bugs):
 - PRIMARY color: Before using it as background, CHECK its luminance. If primary is LIGHT (gold, yellow, pastel, light blue, light pink, beige), NEVER put white text on it. Use dark text (#1a1a1a or #111827) instead.
 - STATS SECTION: If using primary color as background, text MUST be dark (not white). Example: bg-primary with text-gray-900.
@@ -291,6 +301,16 @@ export const ENHANCED_SYSTEM_PROMPT = `You are a senior web architect creating a
 - Sufficient color contrast (WCAG AA)
 - Heading hierarchy: h1 → h2 → h3, never skip levels
 - CONTRAST (WCAG AA): text MUST have 4.5:1 contrast ratio minimum. NEVER use white or light text on yellow/cream/light backgrounds.
+
+🤖 AGENT-CENTRIC ACCESSIBILITY (for Lighthouse Agentic Browsing audit):
+- Every interactive element (<a>, <button>, <input>, <select>, <textarea>) MUST have a programmatic name: use aria-label, aria-labelledby, or ensure visible text content serves as the accessible name.
+- NEVER use aria-hidden="true" on interactive elements or their parents — agents cannot interact with hidden elements.
+- Heading hierarchy MUST be perfect: h1 → h2 → h3, never skip levels. Only ONE h1 per page.
+- All form inputs MUST have associated <label> elements (for="id") or aria-label attributes.
+- Images used as links MUST have alt text describing the destination, not just the image.
+- Use semantic HTML elements (<header>, <nav>, <main>, <section>, <footer>, <article>) — agents use the accessibility tree as their primary data model.
+- ARIA attributes (role, aria-expanded, aria-controls, etc.) must be valid and correctly matched to element functions.
+- Content that is visually hidden but interactive (e.g., mobile menu) must remain in the accessibility tree — use CSS techniques that preserve tree presence (clip-path, sr-only class) rather than display:none or aria-hidden.
 
 ⚠️ CONTRAST COLOR RULES (follow strictly — these cause the most visual bugs):
 - PRIMARY color: Before using it as background, CHECK its luminance. If primary is LIGHT (gold, yellow, pastel, light blue, light pink, beige), NEVER put white text on it. Use dark text (#1a1a1a or #111827) instead.
