@@ -59,7 +59,7 @@ function extractBusinessName(prompt: string): string | null {
     const match = prompt.match(pattern);
     if (match) {
       // Clean up: remove articles and common words
-      let name = match[0]
+      const name = match[0]
         .replace(/^(?:a|o|um|uma|the|my|our|um|una)\s+/i, "")
         .trim();
       // Capitalize first letter of each word

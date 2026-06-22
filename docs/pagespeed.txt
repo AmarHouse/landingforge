@@ -1,0 +1,3 @@
+Google Page Speed New Features
+
+https://developer.chrome.com/docs/lighthouse/agentic-browsing/scoring?hl=pt-br
