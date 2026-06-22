@@ -6,7 +6,7 @@
 import { chatCompletion, type ChatMessage } from "./openai-client";
 import { fixTruncatedHtml } from "./fix-html";
 import { injectModernCSSFallback } from "./style-modern-css";
-import { REVIEW_SEARCH_REPLACE_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, BRIEFING_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
+import { REVIEW_SEARCH_REPLACE_PROMPT, FOLLOW_UP_SYSTEM_PROMPT, INLINE_EDIT_SYSTEM_PROMPT, BRIEFING_SYSTEM_PROMPT, SEARCH_START, DIVIDER, REPLACE_END } from "./prompts";
 
 /**
  * Apply SEARCH/REPLACE patches from AI response to HTML.
@@ -52,6 +52,88 @@ export function applySearchReplace(
   }
 
   return { html: newHtml, updatedLines };
+}
+
+/**
+ * Inline element edit — modifies ONLY a specific element via SEARCH/REPLACE patches.
+ * Falls back to direct string replacement if AI returns full HTML instead of patches.
+ */
+export async function inlineEdit(
+  prompt: string,
+  html: string,
+  elementHtml: string
+): Promise<{ html: string; updatedLines: number[][] }> {
+  const fence = '```';
+  const messages: ChatMessage[] = [
+    { role: "system", content: INLINE_EDIT_SYSTEM_PROMPT },
+    {
+      role: "user",
+      content: `Here is the current HTML page:\n\n${fence}html\n${html}\n${fence}`,
+    },
+    {
+      role: "assistant",
+      content: `I understand. I will output ONLY SEARCH/REPLACE blocks to modify the target element. No full HTML output.`,
+    },
+    {
+      role: "user",
+      content: `Target element to modify (outerHTML):\n${fence}html\n${elementHtml}\n${fence}\n\nEdit request: ${prompt}\n\nOutput ONLY SEARCH/REPLACE blocks. Do NOT output the full HTML file.`,
+    },
+  ];
+
+  const chunk = await chatCompletion({ messages, maxTokens: 16384 });
+
+  if (!chunk) {
+    throw new Error("No content returned from the model");
+  }
+
+  // Try SEARCH/REPLACE patches first
+  const hasPatches = chunk.includes(SEARCH_START);
+  if (hasPatches) {
+    const result = applySearchReplace(chunk, html);
+    if (result.html !== html) {
+      return result;
+    }
+  }
+
+  // Fallback: AI returned full HTML instead of patches — extract the modified element
+  // Look for the new outerHTML by finding what changed
+  const doctypeMatch = chunk.match(/<!DOCTYPE html>/i);
+  if (doctypeMatch) {
+    // AI returned full HTML — try to find the modified element and do a direct replacement
+    // Parse the AI's HTML to find the element that was supposed to be modified
+    try {
+      // Create a temporary div to parse the AI's response
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = chunk;
+
+      // Find the element by matching tag name and similar content
+      const originalTemp = document.createElement('div');
+      originalTemp.innerHTML = elementHtml;
+
+      const tagName = originalTemp.firstElementChild?.tagName;
+      if (tagName) {
+        const aiElements = tempDiv.querySelectorAll(tagName);
+        const origText = originalTemp.textContent?.trim().slice(0, 100) ?? '';
+
+        for (const aiEl of Array.from(aiElements)) {
+          // Find best match by text content similarity
+          const aiText = aiEl.textContent?.trim().slice(0, 100) ?? '';
+          if (origText && aiText && aiText !== origText) {
+            // This element was likely modified — replace it in the original HTML
+            const newHtml = html.replace(elementHtml, aiEl.outerHTML);
+            if (newHtml !== html) {
+              return { html: newHtml, updatedLines: [] };
+            }
+          }
+        }
+      }
+    } catch {
+      // Parsing failed, fall through
+    }
+  }
+
+  // Last resort: return original HTML (no changes applied)
+  return { html, updatedLines: [] };
 }
 
 /**

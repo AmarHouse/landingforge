@@ -34,7 +34,7 @@ import { isTheSameHtml } from "@/lib/compare-html-diff";
 import { downloadHtmlFile, downloadAsFullPageImage, downloadAsPdf } from "@/lib/download-utils";
 import { EditElementDialog } from "./edit-element-dialog";
 import { EditPromptDialog } from "./edit-prompt-dialog";
-import { followUpEdit } from "@/lib/client-processing";
+import { inlineEdit } from "@/lib/client-processing";
 import { savePromptToHistory, saveSiteToHistory } from "@/lib/prompt-history";
 import type { InlineAction } from "@/components/editor/inline-toolbar";
 import DownloadGeneratedContent from "./download-generated-content";
@@ -250,7 +250,7 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
     return html.slice(0, idx) + newOuterHtml + html.slice(idx + oldOuterHtml.length);
   };
 
-  /** "Edit with AI" — send an element-specific prompt via followUpEdit. */
+  /** "Edit with AI" — send an element-specific prompt via inlineEdit. */
   const handleInlinePrompt = async (prompt: string) => {
     if (!selectedElementForToolbar || isAiWorking) return;
     if (!hasAIConfig()) {
@@ -264,30 +264,14 @@ export const AppEditor = ({ project }: { project?: { html?: string } | null }) =
 
     try {
       const elementHtml = selectedElementForToolbar.outerHTML;
-      const fence = '```';
-      const enhancedPrompt =
-        `Edit ONLY the following element. Keep everything else unchanged.
-
-Element to edit:
-${fence}html
-${elementHtml}
-${fence}
-
-Request: ${prompt}`;
-
-      const result = await followUpEdit(
-        enhancedPrompt,
-        html,
-        prompt,
-        elementHtml
-      );
+      const result = await inlineEdit(prompt, html, elementHtml);
 
       if (result.html !== html) {
         setHtml(result.html);
         toast.success("Element updated successfully!");
 
         savePromptToHistory({
-          prompt: enhancedPrompt,
+          prompt: `[Inline] ${prompt}`,
           style: "inline-edit",
           mode: "classic",
           provider: "api",
@@ -360,31 +344,24 @@ Request: ${prompt}`;
     setSelectedElementForToolbar(null);
 
     try {
-      const fence = '```';
-      const regeneratePrompt =
-        `Regenerate ONLY the following element with a fresh, different variation.
-Keep the same purpose and structure but change the styling, content details, or layout slightly.
-Keep everything else in the page unchanged.
-
-Element to regenerate:
-${fence}html
-${elementHtml}
-${fence}`;
-
-      const result = await followUpEdit(regeneratePrompt, html, regeneratePrompt, elementHtml);
+      const result = await inlineEdit(
+        "Regenerate this element with a fresh, different variation. Keep the same purpose and structure but change the styling, content details, or layout slightly.",
+        html,
+        elementHtml
+      );
 
       if (result.html !== html) {
         setHtml(result.html);
         toast.success("Element regenerated!");
 
         savePromptToHistory({
-          prompt: `[Regenerate] ${regeneratePrompt}`,
+          prompt: "[Inline Regenerate]",
           style: "inline-edit",
           mode: "classic",
           provider: "api",
           model: "local",
           isFollowUp: true,
-          originalPrompt: regeneratePrompt,
+          originalPrompt: "Regenerate element",
         });
         saveSiteToHistory({
           prompt: "[Inline Regenerate]",
