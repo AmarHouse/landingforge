@@ -182,6 +182,14 @@ For hero backgrounds: use CSS background-image with dark overlay. For content im
 - CSS custom properties for theming
 - Use IntersectionObserver + transform for scroll animations (NOT scroll-driven animations which are less performant)
 
+🚨 COMPLETION ENFORCEMENT (HIGHEST PRIORITY — violates this = failed page):
+- You MUST write the closing </html> tag. The page is INCOMPLETE without it.
+- You MUST include ALL 11 sections listed above. Do NOT skip any section.
+- You MUST include a <script> block with: hamburger toggle, smooth scroll, FAQ accordion, and IntersectionObserver for fade-in animations.
+- If you are running low on tokens, REDUCE DETAIL per section (shorter paragraphs, fewer items) but NEVER skip entire sections.
+- SECTION PRIORITY ORDER (if truncation is unavoidable, complete these first): header → hero → features → CTA → footer → about → testimonials → stats → pricing → FAQ → newsletter → process.
+- The <script> block and </footer></body></html> MUST be generated even if middle sections are shorter than ideal.
+
 REMEMBER: The goal is a COMPLETE, BEAUTIFUL, CONTENT-RICH landing page with PERFECT PageSpeed scores. Generate as much real, meaningful content as possible. Every section must be fully fleshed out with real text, not placeholders.`;
 
 // Enhanced mode prompt with planning
@@ -328,6 +336,14 @@ export const ENHANCED_SYSTEM_PROMPT = `You are a senior web architect creating a
 - Fluid typography: clamp() for all headings
 - CSS custom properties for dynamic theming
 - Use IntersectionObserver + transform for scroll animations (NOT scroll-driven animations)
+
+🚨 COMPLETION ENFORCEMENT (HIGHEST PRIORITY — violates this = failed page):
+- You MUST write the closing </html> tag. The page is INCOMPLETE without it.
+- You MUST include ALL 11 sections listed above. Do NOT skip any section.
+- You MUST include a <script> block with: hamburger toggle, smooth scroll, FAQ accordion, and IntersectionObserver for fade-in animations.
+- If you are running low on tokens, REDUCE DETAIL per section (shorter paragraphs, fewer items) but NEVER skip entire sections.
+- SECTION PRIORITY ORDER (if truncation is unavoidable, complete these first): header → hero → features → CTA → footer → about → testimonials → stats → pricing → FAQ → newsletter → process.
+- The <script> block and </footer></body></html> MUST be generated even if middle sections are shorter than ideal.
 
 💡 CRITICAL REMINDER: Generate EXTENSIVE, REAL, MEANINGFUL content. Every section must feel like it was written by a professional copywriter. Include specific numbers, real-sounding testimonials, detailed feature descriptions, and persuasive CTAs. The page must be visually stunning, content-rich, AND achieve perfect PageSpeed scores. Do NOT stop generating content until ALL sections are complete and the closing </html> tag is written.`;
 
@@ -676,11 +692,12 @@ RULES:
 - Do NOT output explanations or markdown fences — ONLY SEARCH/REPLACE blocks
 
 FIXES TO APPLY:
+- TRUNCATED HTML: If the HTML is cut off mid-section or missing closing tags (</body></html>), COMPLETE it by appending the missing sections and closing tags. Add: closing </div></section> for any unclosed section, a <script> block with hamburger toggle + smooth scroll + FAQ accordion + IntersectionObserver for fade-in, </footer>, </body>, </html>.
+- Missing sections: If fewer than 8 <section> tags, INSERT the missing sections BEFORE </body> using a SEARCH block that finds </body> and adds content before it. Sections to add if missing: About, Features, Process, Testimonials, Stats, Pricing, FAQ, Newsletter, Footer. Each section must have REAL content (2-3 paragraphs, images, details).
 - Meta tags: Add missing <meta name="description"> (150-160 chars), <meta property="og:title">, <meta property="og:description">, <meta property="og:type" content="website">, <meta property="og:image">, <meta name="twitter:card" content="summary_large_image">, <meta name="theme-color">
-- JSON-LD: Add <script type="application/ld+json"> with WebPage structured data in <head>
-- Content visibility: If opacity:0 is used without animation fallback, add CSS: @media (scripting: none) { .fade-in, .fade-in-up { opacity: 1 !important; transform: none !important; } }
-- Fade-in: If fade-in classes exist but no IntersectionObserver, add a <script> before </body> with IntersectionObserver that adds .visible class
-- Sections: If fewer than 6 <section> tags, add the missing sections with REAL content (About, Features, Testimonials, Stats, FAQ, Footer)
+- JSON-LD: Add <script type="application/ld+json"> with WebPage structured data in <head> if missing
+- Content visibility: If opacity:0 is used without animation fallback, add CSS: @media (scripting: none) { .fade-in, .fade-in-up, .reveal { opacity: 1 !important; transform: none !important; } }
+- JavaScript: If the page has interactive elements (hamburger, accordion, fade-in) but no <script> block, add one before </body> with the corresponding JS functionality
 - Placeholder images: Replace any placehold.co URLs with relevant Pexels images
 - Broken nav links: If a nav/footer href="#X" has no matching id="X", either add the missing section with id="X" or remove the broken link
 
