@@ -366,6 +366,7 @@ export const defaultHTML = `<!DOCTYPE html>
       <footer class="border-t border-slate-800/50 pt-8 pb-6 text-center">
         <p class="text-slate-500 text-sm">LandingForge — AI Landing Page Builder</p>
         <p class="text-slate-600 text-xs mt-2">Documentação do sistema • Design Intelligence • Prompt Enhancer • Inline Editing</p>
+        <p class="text-slate-700 text-[10px] mt-3 font-mono">v1.3.0</p>
       </footer>
 
     </div>
