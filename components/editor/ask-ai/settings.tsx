@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { PiGearSixFill } from "react-icons/pi";
 import { Eye, EyeOff, Globe, Cpu, KeyRound, TestTube } from "lucide-react";
@@ -25,13 +25,26 @@ interface SettingsProps {
 }
 
 export function Settings({ open, onClose, onConfigChange }: SettingsProps) {
-  const existing = getAIConfig();
-
-  const [endpoint, setEndpoint] = useState(existing?.endpoint ?? "");
-  const [model, setModel] = useState(existing?.model ?? "");
-  const [apiKey, setApiKey] = useState(existing?.apiKey ?? "");
+  const [endpoint, setEndpoint] = useState("");
+  const [model, setModel] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [showKey, setShowKey] = useState(false);
   const [testing, setTesting] = useState(false);
+
+  // Sync state from localStorage every time the popover opens
+  useEffect(() => {
+    if (!open) return;
+    const existing = getAIConfig();
+    if (existing) {
+      setEndpoint(existing.endpoint);
+      setModel(existing.model);
+      setApiKey(existing.apiKey);
+    } else {
+      setEndpoint("");
+      setModel("");
+      setApiKey("");
+    }
+  }, [open]);
 
   const canSave = endpoint.trim() && model.trim() && apiKey.trim();
 

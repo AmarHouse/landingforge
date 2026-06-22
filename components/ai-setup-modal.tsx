@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Eye, EyeOff, Cpu, KeyRound, Globe, TestTube } from "lucide-react";
 
@@ -21,13 +21,31 @@ interface AISetupModalProps {
 }
 
 export function AISetupModal({ open, onClose }: AISetupModalProps) {
-  const existing = getAIConfig();
-
-  const [endpoint, setEndpoint] = useState(existing?.endpoint ?? "");
-  const [model, setModel] = useState(existing?.model ?? "");
-  const [apiKey, setApiKey] = useState(existing?.apiKey ?? "");
+  const [endpoint, setEndpoint] = useState("");
+  const [model, setModel] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [showKey, setShowKey] = useState(false);
   const [testing, setTesting] = useState(false);
+
+  // Sync state from localStorage every time the modal opens
+  // This fixes the first-save bug: useState initial values run only once on mount,
+  // but getAIConfig() may return null during SSR/hydration before localStorage is available.
+  useEffect(() => {
+    if (!open) return;
+    const existing = getAIConfig();
+    if (existing) {
+      setEndpoint(existing.endpoint);
+      setModel(existing.model);
+      setApiKey(existing.apiKey);
+    } else {
+      setEndpoint("");
+      setModel("");
+      setApiKey("");
+    }
+  }, [open]);
+
+  // Track whether config exists for the Cancel button (avoid re-reading localStorage in JSX)
+  const hasExistingConfig = getAIConfig() !== null;
 
   const canSave = endpoint.trim() && model.trim() && apiKey.trim();
 
@@ -208,7 +226,7 @@ export function AISetupModal({ open, onClose }: AISetupModalProps) {
           </Button>
 
           <div className="flex items-center gap-2">
-            {existing && (
+            {hasExistingConfig && (
               <Button variant="ghost" size="sm" onClick={onClose}>
                 Cancel
               </Button>
